@@ -27,7 +27,8 @@ Suggests:
     knitr,
     rmarkdown,
     spatialDE,
-    testthat (>= 3.0.0)
+    testthat (>= 3.0.0),
+    BiocCheck
 Remotes: sales-lab/spatialDE@wrap_functions
 LazyData: true
 biocViews: Software, Transcriptomics, GeneExpression
