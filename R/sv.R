@@ -80,8 +80,8 @@ spark_svg <- function(x, counts) {
   
   # TODO: get in input `num_core`
   spark <- SPARK::spark.vc(spark, covariates = NULL, lib_size = spark@lib_size, 
-                           num_core = 1, verbose = T, fit.maxiter = 500)
-  spark <- SPARK::spark.test(spark, check_positive = T, verbose = T)
+                           num_core = 1, verbose = TRUE, fit.maxiter = 500)
+  spark <- SPARK::spark.test(spark, check_positive = TRUE, verbose = TRUE)
   
   output <- spark@res_mtest
   
