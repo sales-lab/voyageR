@@ -67,5 +67,25 @@ spatialde_svg <- function(x, counts) {
 }
 
 spark_svg <- function(x, counts) {
+  pacman::p_load_gh("sales-lab/SPARK")
   
+  cn <- colnames(counts)
+  coordinates <- as.data.frame(spatialCoords(x))
+  rownames(coordinates) <- cn
+  
+  # Creating SPARK Object
+  spark <- SPARK::CreateSPARKObject(counts = counts, location = coordinates, 
+                                    percentage = 0.1, min_total_counts = 10)
+  spark@lib_size <- apply(spark@counts, 2, sum)
+  
+  # TODO: get in input `num_core`
+  spark <- SPARK::spark.vc(spark, covariates = NULL, lib_size = spark@lib_size, 
+                           num_core = 1, verbose = T, fit.maxiter = 500)
+  spark <- SPARK::spark.test(spark, check_positive = T, verbose = T)
+  
+  output <- spark@res_mtest
+  
+  ordering <- match(rownames(counts), rownames(output))
+  SummarizedExperiment::rowData(x)$spark <- output[ordering, ]
+  return(x)
 }
