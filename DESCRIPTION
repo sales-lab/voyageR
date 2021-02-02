@@ -30,8 +30,9 @@ Suggests:
     SPARK,
     testthat (>= 3.0.0),
     BiocCheck
-Remotes: sales-lab/spatialDE@wrap_functions
-Remotes: sales-lab/SPARK
+Remotes: 
+    sales-lab/spatialDE@wrap_functions,
+    sales-lab/SPARK
 LazyData: true
 biocViews: Software, Transcriptomics, GeneExpression
 VignetteBuilder: knitr
