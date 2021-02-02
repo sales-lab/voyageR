@@ -20,6 +20,6 @@ A \link{SpatialExperiment} object.
 Generate SpatialExperiment instance including spatially variable genes.
 }
 \examples{
-mockSVGenes(1000, 10, 100)
+mockSVGenes(20, 2, 20)
 
 }
