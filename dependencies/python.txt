@@ -2,3 +2,16 @@ scipy
 pandas
 file:///repos/RobustGP
 file:///repos/GPcounts
+sklearn
+umap
+patsy
+anndata
+tensorflow
+gpflow
+tqdm
+statsmodels
+cython
+scgco
+somde
+naivede
+spatialde
