@@ -12,7 +12,7 @@ from main_methods import select_spatial_genes
 import pandas as pd
 import numpy as np
 
-sys.path.insert(1, "../../")
+sys.path.insert(1, "/benchmark")
 from utils_anndata import parse_args, detach_anndata, load_anndata, write_results
 
 

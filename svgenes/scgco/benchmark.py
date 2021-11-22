@@ -11,7 +11,7 @@ import numpy as np
 from scipy.spatial.distance import cdist
 
 import sys
-sys.path.insert(1, "../../")
+sys.path.insert(1, "/benchmark")
 from utils_anndata import parse_args, detach_anndata, load_anndata, write_results
 
 

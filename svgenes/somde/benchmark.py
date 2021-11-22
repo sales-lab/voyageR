@@ -9,7 +9,7 @@ from somde import SomNode
 from somde.util import *
 
 import sys
-sys.path.insert(1, "../../")
+sys.path.insert(1, "/benchmark")
 from utils_anndata import parse_args, detach_anndata, load_anndata, write_results
 
 

@@ -14,10 +14,10 @@ os.environ["MKL_NUM_THREADS"] = str(nthreads)
 os.environ["NUMEXPR_NUM_THREADS"] = str(nthreads)
 os.environ["OMP_NUM_THREADS"] = str(nthreads)
 
-sys.path.insert(1, 'JSTA/CoreFunctions/')
+sys.path.insert(1, '/repos/JSTA/CoreFunctions/')
 from FindSpatialDEGs import *
 
-sys.path.insert(1, "../../")
+sys.path.insert(1, "/benchmark")
 from utils_anndata import parse_args, detach_anndata, load_anndata, write_results
 
 
