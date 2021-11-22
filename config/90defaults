@@ -1,0 +1,6 @@
+APT::Get::Assume-Yes "true";
+Dpkg::Options {
+    "--force-confnew";
+    "--force-confmiss";
+}
+apt::install-recommends "false";

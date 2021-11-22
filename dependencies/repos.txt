@@ -1,0 +1,5 @@
+https://github.com/junjiezhujason/gliss.git
+https://github.com/ManchesterBioinference/GPcounts
+https://github.com/markvdw/RobustGP
+https://github.com/Minzhe/BOOST-GP
+https://github.com/wollmanlab/JSTA

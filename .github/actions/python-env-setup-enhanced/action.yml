@@ -1,0 +1,34 @@
+name: python-env-setup-enhanced
+author: "Davide Corso"
+description: "Creates a Python virtual environment including the required packages."
+
+inputs:
+  workdir:
+    description: "Path of the working directory"
+    required: true
+
+  extra_deps:
+    description: "Extra packages to be installed in the environment"
+    required: false
+    default: ""
+
+runs:
+  using: composite
+  steps:
+    - name: Create the virtual environment
+      shell: bash
+      run: |
+        cd '${{ inputs.workdir }}'
+        python3 -m venv .venv
+
+    - name: Install requirements also with install.sh
+      shell: bash
+      run: |
+        cd '${{ inputs.workdir }}'
+        . .venv/bin/activate
+        pip install --upgrade pip
+        pip install --upgrade setuptools
+        pip install --upgrade wheel
+        [ -z "${{ inputs.extra_deps }}" ] || pip install ${{ inputs.extra_deps }}
+        pip install -r requirements.txt
+        ./install.sh

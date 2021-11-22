@@ -1,0 +1,625 @@
+name: Benchmark
+on: [push]
+jobs:
+
+  SpatialDE:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set up Python 3
+        uses: actions/setup-python@v2
+        with:
+          python-version: "3.x"
+
+      - name: Record pip cache dir
+        id: pip-cache
+        run: |
+          echo "::set-output name=dir::$(pip cache dir)"
+
+      - name: Cache pip files
+        uses: actions/cache@v2
+        with:
+          path: ${{ steps.pip-cache.outputs.dir }}
+          key: ${{ runner.os }}-pip-spatialde-${{ hashFiles('svgenes/spatialde/requirements.txt') }}
+
+      - name: Install package
+        uses: ./.github/actions/python-env-setup
+        with:
+          workdir: svgenes/spatialde
+
+      - name: Retrive example data
+        run: |
+          cd svgenes/spatialde
+          curl --fail --location --output Rep11_MOB_0.csv 'https://sales.bio.unipd.it/bulk/b1678ba2e04342053efd5d3bc277d98e65280800ff4da0a1a3fc64e74c3214e8/Rep11_MOB_0.csv'
+          curl --fail --location --output MOB_sample_info.csv 'https://sales.bio.unipd.it/bulk/b1678ba2e04342053efd5d3bc277d98e65280800ff4da0a1a3fc64e74c3214e8/MOB_sample_info.csv'
+
+      - name: Benchmark
+        run: |
+          cd svgenes/spatialde
+          . .venv/bin/activate
+          ./benchmark.py
+
+      - uses: actions/upload-artifact@v2
+        with:
+          name: spatialde-results
+          path: svgenes/spatialde/results.csv
+
+  SPARK:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Setup R
+        uses: r-lib/actions/setup-r@v1
+        with:
+          r-version: "4.1.0"
+      
+      - name: Install curl
+        run: sudo apt-get install curl libcurl4-openssl-dev libmagick++-dev
+
+      - name: Install renv
+        run: 'install.packages("renv")'
+        shell: Rscript {0}
+
+      - name: Record renv cache dir
+        id: renv-cache
+        run: |
+          echo "::set-output name=dir::$(Rscript -e 'cat(renv::paths$cache())')"
+
+      - name: Cache renv files
+        uses: actions/cache@v2
+        with:
+          path: ${{ steps.renv-cache.outputs.dir }}
+          key: ${{ runner.os }}-renv-spark-${{ hashFiles('svgenes/spark/renv.lock') }}
+
+      - name: Restore renv state
+        run: |
+          cd svgenes/spark
+          Rscript -e 'renv::init()'
+
+      - name: Benchmark
+        run: |
+          cd svgenes/spark
+          ./benchmark.R
+
+      - uses: actions/upload-artifact@v2
+        with:
+          name: spark-results
+          path: svgenes/spark/results.csv
+
+  Giotto:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set up Python 3
+        uses: actions/setup-python@v2
+        with:
+          python-version: "3.x"
+
+      - name: Record pip cache dir
+        id: pip-cache
+        run: |
+          echo "::set-output name=dir::$(pip cache dir)"
+
+      - name: Cache pip files
+        uses: actions/cache@v2
+        with:
+          path: ${{ steps.pip-cache.outputs.dir }}
+          key: ${{ runner.os }}-pip-giotto-${{ hashFiles('svgenes/giotto/requirements.txt') }}
+
+      - name: Install package
+        uses: ./.github/actions/python-env-setup
+        with:
+          workdir: svgenes/giotto
+
+      - name: Setup R
+        uses: r-lib/actions/setup-r@v1
+        with:
+          r-version: "4.1.0"
+        
+      - name: Install curl
+        run: sudo apt-get install curl libcurl4-openssl-dev libmagick++-dev
+
+      - name: Install renv
+        run: 'install.packages("renv")'
+        shell: Rscript {0}
+
+      - name: Record renv cache dir
+        id: renv-cache
+        run: |
+          echo "::set-output name=dir::$(Rscript -e 'cat(renv::paths$cache())')"
+
+      - name: Cache renv files
+        uses: actions/cache@v2
+        with:
+          path: ${{ steps.renv-cache.outputs.dir }}
+          key: ${{ runner.os }}-renv-giotto-${{ hashFiles('svgenes/giotto/renv.lock') }}
+
+      - name: Restore renv state
+        run: |
+          cd svgenes/giotto
+          Rscript -e 'renv::init()'
+        
+      - name: Benchmark svGenes with Giotto binSpect
+        run: |
+          cd svgenes/giotto
+          ./benchmark_binSpect.R
+
+      - name: Benchmark svGenes with Giotto SilhouetteRank
+        run: |
+          cd svgenes/giotto
+          ./benchmark_silhouette.R
+
+      - uses: actions/upload-artifact@v2
+        with:
+          name: giotto-results
+          path: svgenes/giotto/results*.csv
+
+  GPcounts:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set up Python 3
+        uses: actions/setup-python@v2
+        with:
+          python-version: "3.x"
+
+      - name: Record pip cache dir
+        id: pip-cache
+        run: |
+          echo "::set-output name=dir::$(pip cache dir)"
+
+      - name: Cache pip files
+        uses: actions/cache@v2
+        with:
+          path: ${{ steps.pip-cache.outputs.dir }}
+          key: ${{ runner.os }}-pip-gpcounts-${{ hashFiles('svgenes/gpcounts/requirements.txt') }}
+
+      - name: Install package with requirements and other dependencies
+        uses: ./.github/actions/python-env-setup-enhanced
+        with:
+          workdir: svgenes/gpcounts
+
+      - name: Retrive example data
+        run: |
+          cd svgenes/gpcounts
+          curl --fail --location --output Rep11_MOB_0.csv 'https://sales.bio.unipd.it/bulk/b1678ba2e04342053efd5d3bc277d98e65280800ff4da0a1a3fc64e74c3214e8/Rep11_MOB_0.csv'
+
+      - name: Benchmark
+        run: |
+          cd svgenes/gpcounts
+          . .venv/bin/activate
+          ./benchmark.py
+
+      - uses: actions/upload-artifact@v2
+        with:
+          name: gpcounts-results
+          path: svgenes/gpcounts/results.csv
+  
+  singleCellHaystack:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Setup R
+        uses: r-lib/actions/setup-r@v1
+        with:
+          r-version: "4.1.0"
+
+      - name: Install curl
+        run: sudo apt-get install curl libcurl4-openssl-dev libmagick++-dev
+
+      - name: Install renv
+        run: 'install.packages("renv")'
+        shell: Rscript {0}
+
+      - name: Record renv cache dir
+        id: renv-cache
+        run: |
+          echo "::set-output name=dir::$(Rscript -e 'cat(renv::paths$cache())')"
+
+      - name: Cache renv files
+        uses: actions/cache@v2
+        with:
+          path: ${{ steps.renv-cache.outputs.dir }}
+          key: ${{ runner.os }}-renv-singlecellhaystack-${{ hashFiles('svgenes/singlecellhaystack/renv.lock') }}
+
+      - name: Restore renv state
+        run: |
+          cd svgenes/singlecellhaystack
+          Rscript -e 'renv::init()'
+
+      - name: Benchmark
+        run: |
+          cd svgenes/singlecellhaystack
+          ./benchmark.R
+
+      - uses: actions/upload-artifact@v2
+        with:
+          name: singlecellhaystack-results
+          path: svgenes/singlecellhaystack/results.csv
+
+  scGCO:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set up Python 3
+        uses: actions/setup-python@v2
+        with:
+          python-version: "3.x"
+
+      - name: Record pip cache dir
+        id: pip-cache
+        run: |
+          echo "::set-output name=dir::$(pip cache dir)"
+
+      - name: Cache pip files
+        uses: actions/cache@v2
+        with:
+          path: ${{ steps.pip-cache.outputs.dir }}
+          key: ${{ runner.os }}-pip-scgco-${{ hashFiles('svgenes/scgco/requirements.txt') }}
+
+      - name: Install package
+        uses: ./.github/actions/python-env-setup-scgco
+        with:
+          workdir: svgenes/scgco
+
+      - name: Retrive example data
+        run: |
+          cd svgenes/scgco
+          curl --fail --location --output Rep11_MOB_0.csv 'https://sales.bio.unipd.it/bulk/b1678ba2e04342053efd5d3bc277d98e65280800ff4da0a1a3fc64e74c3214e8/Rep11_MOB_0.csv'
+
+      - name: Benchmark
+        run: |
+          cd svgenes/scgco
+          . .venv/bin/activate
+          ./benchmark.py
+
+      - uses: actions/upload-artifact@v2
+        with:
+          name: scgco-results
+          path: svgenes/scgco/results.csv
+  
+  STUtility:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Setup R
+        uses: r-lib/actions/setup-r@v1
+        with:
+          r-version: "4.1.0"
+      
+      - name: Install curl
+        run: sudo apt-get install curl libcurl4-openssl-dev libmagick++-dev
+
+      - name: Install dependencies
+        run: sudo apt-get install fftw3 libfftw3-dev libudunits2-dev libgdal-dev
+
+      - name: Install renv
+        run: 'install.packages("renv")'
+        shell: Rscript {0}
+
+      - name: Record renv cache dir
+        id: renv-cache
+        run: |
+          echo "::set-output name=dir::$(Rscript -e 'cat(renv::paths$cache())')"
+
+      - name: Cache renv files
+        uses: actions/cache@v2
+        with:
+          path: ${{ steps.renv-cache.outputs.dir }}
+          key: ${{ runner.os }}-renv-stutility-${{ hashFiles('svgenes/stutility/renv.lock') }}
+
+      - name: Restore renv state
+        run: |
+          cd svgenes/stutility
+          Rscript -e 'renv::init()'
+
+      - name: Benchmark
+        run: |
+          cd svgenes/stutility
+          ./benchmark.R
+
+      - uses: actions/upload-artifact@v2
+        with:
+          name: stutility-results
+          path: svgenes/stutility/results.csv
+  
+  Somde:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set up Python 3
+        uses: actions/setup-python@v2
+        with:
+          python-version: "3.x"
+
+      - name: Record pip cache dir
+        id: pip-cache
+        run: |
+          echo "::set-output name=dir::$(pip cache dir)"
+
+      - name: Cache pip files
+        uses: actions/cache@v2
+        with:
+          path: ${{ steps.pip-cache.outputs.dir }}
+          key: ${{ runner.os }}-pip-somde-${{ hashFiles('svgenes/somde/requirements.txt') }}
+
+      - name: Install package
+        uses: ./.github/actions/python-env-setup-somde
+        with:
+          workdir: svgenes/somde
+
+      - name: Retrive example data
+        run: |
+          cd svgenes/somde
+          curl --fail --location --output Rep11_MOB_0.csv 'https://sales.bio.unipd.it/bulk/b1678ba2e04342053efd5d3bc277d98e65280800ff4da0a1a3fc64e74c3214e8/Rep11_MOB_0.csv'
+          curl --fail --location --output MOB_sample_info.csv 'https://sales.bio.unipd.it/bulk/b1678ba2e04342053efd5d3bc277d98e65280800ff4da0a1a3fc64e74c3214e8/MOB_sample_info.csv'
+
+      - name: Benchmark
+        run: |
+          cd svgenes/somde
+          . .venv/bin/activate
+          ./benchmark.py
+
+      - uses: actions/upload-artifact@v2
+        with:
+          name: somde-results
+          path: svgenes/somde/results.csv
+
+  Seurat:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Setup R
+        uses: r-lib/actions/setup-r@v1
+        with:
+          r-version: "4.1.0"
+
+      - name: Install curl
+        run: sudo apt-get install curl libcurl4-openssl-dev libmagick++-dev
+
+      - name: Install renv
+        run: 'install.packages("renv")'
+        shell: Rscript {0}
+
+      - name: Record renv cache dir
+        id: renv-cache
+        run: |
+          echo "::set-output name=dir::$(Rscript -e 'cat(renv::paths$cache())')"
+
+      - name: Cache renv files
+        uses: actions/cache@v2
+        with:
+          path: ${{ steps.renv-cache.outputs.dir }}
+          key: ${{ runner.os }}-renv-seurat-${{ hashFiles('svgenes/seurat/renv.lock') }}
+
+      - name: Restore renv state
+        run: |
+          cd svgenes/seurat
+          Rscript -e 'renv::init()'
+
+      - name: Benchmark Morans I
+        run: |
+          cd svgenes/seurat
+          ./benchmark_moransi.R
+
+      - name: Benchmark Markvariogram
+        run: |
+          cd svgenes/seurat
+          ./benchmark_markvariogram.R
+
+      - uses: actions/upload-artifact@v2
+        with:
+          name: seurat-results
+          path: svgenes/seurat/results*.csv
+  
+  GLISS:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set up Python 3
+        uses: actions/setup-python@v2
+        with:
+          python-version: "3.8" # per gliss è meglio installare python 3.8
+
+      - name: Record pip cache dir
+        id: pip-cache
+        run: |
+          echo "::set-output name=dir::$(pip cache dir)"
+
+      - name: Cache pip files
+        uses: actions/cache@v2
+        with:
+          path: ${{ steps.pip-cache.outputs.dir }}
+          key: ${{ runner.os }}-pip-gliss-${{ hashFiles('svgenes/gliss/requirements.txt') }}
+
+      - name: Install LLVM
+        run: sudo apt-get install curl llvm-7
+
+      - name: Install package
+        uses: ./.github/actions/python-env-setup-gliss
+        with:
+          workdir: svgenes/gliss
+
+      - name: Retrive example data
+        run: |
+          cd svgenes/gliss
+          curl --fail --location --output Rep11_MOB_0.csv 'https://sales.bio.unipd.it/bulk/b1678ba2e04342053efd5d3bc277d98e65280800ff4da0a1a3fc64e74c3214e8/Rep11_MOB_0.csv'
+      
+      - name: Clone src code
+        run: |
+          cd svgenes/gliss
+          ./clone_repo.sh
+
+      - name: Benchmark
+        run: |
+          cd svgenes/gliss
+          . .venv/bin/activate
+          ./benchmark.py
+
+      - uses: actions/upload-artifact@v2
+        with:
+          name: gliss-results
+          path: svgenes/gliss/results.csv
+  
+  BOOSTGP:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Setup R
+        uses: r-lib/actions/setup-r@v1
+        with:
+          r-version: "4.1.0"
+      
+      - name: Install curl
+        run: sudo apt-get install curl libcurl4-openssl-dev libmagick++-dev git
+
+      - name: Install renv
+        run: 'install.packages("renv")'
+        shell: Rscript {0}
+
+      - name: Record renv cache dir
+        id: renv-cache
+        run: |
+          echo "::set-output name=dir::$(Rscript -e 'cat(renv::paths$cache())')"
+
+      - name: Cache renv files
+        uses: actions/cache@v2
+        with:
+          path: ${{ steps.renv-cache.outputs.dir }}
+          key: ${{ runner.os }}-renv-boostgp-${{ hashFiles('svgenes/boostgp/renv.lock') }}
+
+      - name: Restore renv state
+        run: |
+          cd svgenes/boostgp
+          Rscript -e 'renv::init()'
+
+      - name: Clone src code
+        run: |
+          cd svgenes/boostgp
+          ./clone_repo.sh
+
+      - name: Benchmark
+        run: |
+          cd svgenes/boostgp
+          ./benchmark.R
+
+      - uses: actions/upload-artifact@v2
+        with:
+          name: boostgp-results
+          path: svgenes/boostgp/results.csv
+
+  MERINGUE:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Setup R
+        uses: r-lib/actions/setup-r@v1
+        with:
+          r-version: "4.1.0"
+      
+      - name: Install curl
+        run: sudo apt-get install curl libcurl4-openssl-dev libmagick++-dev
+
+      - name: Install renv
+        run: 'install.packages("renv")'
+        shell: Rscript {0}
+
+      - name: Record renv cache dir
+        id: renv-cache
+        run: |
+          echo "::set-output name=dir::$(Rscript -e 'cat(renv::paths$cache())')"
+
+      - name: Cache renv files
+        uses: actions/cache@v2
+        with:
+          path: ${{ steps.renv-cache.outputs.dir }}
+          key: ${{ runner.os }}-renv-meringue-${{ hashFiles('svgenes/meringue/renv.lock') }}
+
+      - name: Restore renv state
+        run: |
+          cd svgenes/meringue
+          Rscript -e 'renv::init()'
+
+      - name: Retrive example data
+        run: |
+          cd svgenes/meringue
+          curl --fail --location --output Rep11_MOB_0.csv 'https://sales.bio.unipd.it/bulk/b1678ba2e04342053efd5d3bc277d98e65280800ff4da0a1a3fc64e74c3214e8/Rep11_MOB_0.csv'
+          curl --fail --location --output MOB_sample_info.csv 'https://sales.bio.unipd.it/bulk/b1678ba2e04342053efd5d3bc277d98e65280800ff4da0a1a3fc64e74c3214e8/MOB_sample_info.csv'
+
+      - name: Benchmark
+        run: |
+          cd svgenes/meringue
+          ./benchmark.R
+
+      - uses: actions/upload-artifact@v2
+        with:
+          name: meringue-results
+          path: svgenes/meringue/results.csv
+
+  RayleighSelection:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Setup R
+        uses: r-lib/actions/setup-r@v1
+        with:
+          r-version: "4.1.0"
+      
+      - name: Install curl
+        run: sudo apt-get install curl libcurl4-openssl-dev libmagick++-dev
+
+      - name: Install renv
+        run: 'install.packages("renv")'
+        shell: Rscript {0}
+
+      - name: Record renv cache dir
+        id: renv-cache
+        run: |
+          echo "::set-output name=dir::$(Rscript -e 'cat(renv::paths$cache())')"
+
+      - name: Cache renv files
+        uses: actions/cache@v2
+        with:
+          path: ${{ steps.renv-cache.outputs.dir }}
+          key: ${{ runner.os }}-renv-rayleighselection-${{ hashFiles('svgenes/rayleighselection/renv.lock') }}
+
+      - name: Restore renv state
+        run: |
+          cd svgenes/rayleighselection
+          Rscript -e 'renv::init()'
+
+      - name: Benchmark
+        run: |
+          cd svgenes/rayleighselection
+          ./benchmark.R
+
+      - uses: actions/upload-artifact@v2
+        with:
+          name: rayleighselection-results
+          path: svgenes/rayleighselection/results.csv
+
+  report:
+    runs-on: ubuntu-latest
+    needs: [SpatialDE, SPARK, Giotto, GPcounts, singleCellHaystack, scGCO, STUtility, Somde, Seurat, GLISS, BOOSTGP, MERINGUE, RayleighSelection]
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: actions/download-artifact@v2
+        with:
+          path: results
+
+      - run: |
+          find results*

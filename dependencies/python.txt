@@ -1,0 +1,4 @@
+scipy
+pandas
+file:///repos/RobustGP
+file:///repos/GPcounts

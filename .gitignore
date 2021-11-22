@@ -1,0 +1,15 @@
+.venv*/
+renv/
+.Rhistory
+.Rproj.user
+*.Rproj
+/**/data
+.Rprofile
+test.R
+/datasets
+svgenes/gliss/src
+/**/*results*.csv
+/__pycache__
+/**/*.ipynb
+/**/Rep11_MOB_0.csv
+/**/MOB_sample_info.csv
