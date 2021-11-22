@@ -9,7 +9,7 @@ RUN find /tmp/apt/ -type f -exec install --mode=644 {} /etc/apt/apt.conf.d \; \
  && sed -i '/^Templates:/a Frontend: noninteractive' /etc/debconf.conf \
  && apt-get update \
  && apt-get dist-upgrade --yes \
- && apt-get install --yes build-essential curl wget git gnupg2 \
+ && apt-get install --yes build-essential curl wget git less nano gnupg2 \
         libcurl4-openssl-dev libmagick++-dev libgmp-dev libgsl-dev \
         libfftw3-dev libudunits2-dev libgdal-dev libgmp3-dev libssl-dev \
         zlib1g-dev libncurses5-dev libgdbm-dev libnss3-dev libsqlite3-dev \
@@ -28,7 +28,7 @@ RUN apt-get update \
 
 ## R
 RUN apt-key adv --keyserver keyserver.ubuntu.com \
-        --recv-key 'E19F5F87128899B192B1A2C2AD5F960A256A04AF' \
+        --recv-key 'B8F25A8A73EACF41' \
  && echo 'deb http://cloud.r-project.org/bin/linux/debian bullseye-cran40/' \
         >/etc/apt/sources.list.d/cran.list \
  && apt-get update \
@@ -74,6 +74,9 @@ RUN cd /repos/JSTA \
 RUN mkdir -p /benchmark/datasets /benchmark/svgenes
 COPY datasets /benchmark/datasets/
 COPY svgenes /benchmark/svgenes/
+COPY utils.R /benchmark/
+COPY spe2seurat.R /benchmark/
+COPY utils_anndata.py /benchmark/
 
 ENV LC_ALL=C
 
