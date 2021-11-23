@@ -63,6 +63,7 @@ RUN Rscript -e 'pkgs <- readLines("/tmp/r.txt"); \
 
 ## Python
 COPY dependencies/python.txt /tmp/
+RUN pip install cython numpy
 RUN pip install --no-cache-dir -r /tmp/python.txt \
  && rm -rf /tmp/python.txt
 
