@@ -44,7 +44,7 @@ def detach_anndata(ad, symbols=False, transpose_counts=False, coord_on_colnames=
 
 
 def load_anndata(dataset):
-    ad = anndata.read_h5ad(f"../../datasets/SpE_{dataset}.h5ad")
+    ad = anndata.read_h5ad(f"/benchmark/datasets/SpE_{dataset}.h5ad")
     return ad
 
 
