@@ -15,3 +15,4 @@ singleCellHaystack
 SpatialExperiment
 TENxVisiumData
 xzhoulab/SPARK
+spatialLIBD
