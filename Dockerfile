@@ -9,7 +9,7 @@ RUN find /tmp/apt/ -type f -exec install --mode=644 {} /etc/apt/apt.conf.d \; \
  && sed -i '/^Templates:/a Frontend: noninteractive' /etc/debconf.conf \
  && apt-get update \
  && apt-get dist-upgrade --yes \
- && apt-get install --yes build-essential curl wget git less nano gnupg2 \
+ && apt-get install --yes build-essential curl wget git less nano gnupg2 time \
         libcurl4-openssl-dev libmagick++-dev libgmp-dev libgsl-dev \
         libfftw3-dev libudunits2-dev libgdal-dev libgmp3-dev libssl-dev \
         zlib1g-dev libncurses5-dev libgdbm-dev libnss3-dev libsqlite3-dev \
@@ -75,9 +75,11 @@ RUN cd /repos/JSTA \
 RUN mkdir -p /benchmark/datasets /benchmark/svgenes
 COPY datasets /benchmark/datasets/
 COPY svgenes /benchmark/svgenes/
+
 COPY utils.R /benchmark/
 COPY spe2seurat.R /benchmark/
 COPY utils_anndata.py /benchmark/
+COPY benchmark_svgenes.sh /benchmark/
 
 ENV LC_ALL=C
 
