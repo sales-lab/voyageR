@@ -11,16 +11,10 @@
 # Copyright 2021 Davide Corso
 #
 
-if [[ -z "$1" ]] ; then
-    echo 'No dataset supplied'
-    exit 1
-fi
-
 dataset=$1
+output_folder=$2
 
 cd ../meringue
 echo "======= MERINGUE ======="
-# Setup Meringue
-Rscript -e "renv::init()" &> setup.txt
 # Benchmark Meringue
-/usr/bin/time -v -o bench_${dataset}.txt ./benchmark.R ${dataset} &> stdoe_${dataset}.txt
+/usr/bin/time -v -o ${output_folder}/bench_${dataset}.txt ./benchmark.R ${dataset} &> ${output_folder}/stdoe_${dataset}.txt

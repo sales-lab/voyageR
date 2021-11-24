@@ -12,18 +12,10 @@
 #
 
 
-if [[ -z "$1" ]] ; then
-    echo 'No dataset supplied'
-    exit 1
-fi
-
 dataset=$1
+output_folder=$2
 
 cd ../spatialde
 echo "======= SpatialDE ======="
-# Setup SpatialDE
-python3.8 -m venv .venv
-. .venv/bin/activate
-pip install -r requirements.txt &> setup.txt
 # Benchmark SpatialDE
-/usr/bin/time -v -o bench_${dataset}.txt ./benchmark.py ${dataset} &> stdoe_${dataset}.txt
+/usr/bin/time -v -o ${output_folder}/bench_${dataset}.txt ./benchmark.py ${dataset} &> ${output_folder}/stdoe_${dataset}.txt

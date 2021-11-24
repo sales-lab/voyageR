@@ -12,16 +12,10 @@
 #
 
 
-if [[ -z "$1" ]] ; then
-    echo 'No dataset supplied'
-    exit 1
-fi
-
 dataset=$1
+output_folder=$2
 
 cd ../singlecellhaystack
 echo "======= SingleCellHaystack ======="
-# Setup SingleCellHaystack
-Rscript -e "renv::init()" &> setup.txt
 # Benchmark SingleCellHaystack
-/usr/bin/time -v -o bench_${dataset}.txt ./benchmark.R ${dataset} &> stdoe_${dataset}.txt
+/usr/bin/time -v -o ${output_folder}/bench_${dataset}.txt ./benchmark.R ${dataset} &> ${output_folder}/stdoe_${dataset}.txt
