@@ -28,6 +28,11 @@ while getopts ":p:d:o:h" options; do
 done
 
 
+if [ $# -eq 0 ]; then
+    usage
+    exit 1
+fi
+
 if [[ -z "$package" ]] ; then
     echo 'No package supplied'
     exit 1
@@ -52,7 +57,7 @@ fi
 
 DIR="/benchmark/svgenes/${package}"
 if [ -d "$DIR" ]; then  
-  cd "/benchmark/_execute/"
+  cd "/benchmark/svgenes/_execute/"
   ./${package}.sh ${dataset} ${output_folder}
 else
   ###  Control will jump here if $DIR does NOT exists ###
