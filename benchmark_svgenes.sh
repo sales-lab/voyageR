@@ -4,19 +4,37 @@
 #
 
 
-if [[ -z "$1" ]] ; then
+function usage () {
+    cat >&2 <<EOF
+USAGE: ./benchmark_svgenes.sh [options]
+Perform benchmark for specific package and dataset
+
+-p <package>        : Package.  Required.
+-d <dataset>        : 10xVisium dataset from TENxVisiumData Bioconductor package. Required.
+-o <outputdir>      : Where to write output. Rquired
+-h                  : Print usage and exit.
+EOF
+}
+
+while getopts ":p:d:o:h" options; do
+  case $options in
+    p ) package=$OPTARG;;
+    d ) dataset=$OPTARG;;
+    o ) output_folder=$OPTARG;;
+    h ) usage
+  esac
+done
+
+
+if [[ -z "$package" ]] ; then
     echo 'No package supplied'
     exit 1
 fi
 
-package=$1
-
-if [[ -z "$2" ]] ; then
+if [[ -z "$dataset" ]] ; then
     echo 'No dataset supplied'
     exit 1
 fi
-
-dataset=$2
 
 FILE="/benchmark/datasets/SpE_${dataset}.h5ad"
 if [! -f "$FILE" ]; then
@@ -25,12 +43,10 @@ if [! -f "$FILE" ]; then
     Rscript -e "source('utils.R'); spe_to_h5ad('${dataset}', '${FILE}')"
 fi
 
-if [! -d $3 ]; then
+if [! -d $output_folder ]; then
     echo 'No output folder supplied'
     exit 1
 fi
-
-output_folder=$3
 
 DIR="/benchmark/svgenes/${package}"
 if [ -d "$DIR" ]; then  
