@@ -3,20 +3,20 @@
 # Copyright 2021 Davide Corso
 #
 
-package=$1
-dataset=$2
-output_folder=$3
-
 
 if [[ -z "$1" ]] ; then
     echo 'No package supplied'
     exit 1
 fi
 
+package=$1
+
 if [[ -z "$2" ]] ; then
     echo 'No dataset supplied'
     exit 1
 fi
+
+dataset=$2
 
 FILE="/benchmark/datasets/SpE_${dataset}.h5ad"
 if [! -f "$FILE" ]; then
@@ -25,15 +25,12 @@ if [! -f "$FILE" ]; then
     Rscript -e "source('utils.R'); spe_to_h5ad('${dataset}', '${FILE}')"
 fi
 
-if [! -d "${output_folder}" ]; then
+if [! -d $3 ]; then
     echo 'No output folder supplied'
     exit 1
 fi
 
-if [[ -z "$2" ]] ; then
-    echo 'No dataset supplied'
-    exit 1
-fi
+output_folder=$3
 
 DIR="/benchmark/svgenes/${package}"
 if [ -d "$DIR" ]; then  
