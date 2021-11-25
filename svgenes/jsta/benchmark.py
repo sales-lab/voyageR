@@ -47,7 +47,7 @@ def jsta_workflow(counts, coords):
     
     fdrs = fdrcorrection([i[0] for i in pvals_gene_list], alpha=0.05, method='indep', is_sorted=False)[1]
     results = pd.DataFrame([[fdrs[i], pvals_gene_list[i][1]] for i in range(len(fdrs))], columns=["adjusted_pvalue", "gene"])
-    write_results(results)
+    write_results(results, pckg_name="jsta", analysis="svgenes")
 
 
 args = parse_args()

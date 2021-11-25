@@ -85,7 +85,7 @@ def scgco_workflow(counts, num_exp_genes=0.01, num_exp_spots=0.01, min_expressio
     assert "gene" not in list(result_df.columns)
     result_df.reset_index(inplace=True)
     result_df.rename(columns={'index': 'gene'}, inplace=True)
-    write_results(result_df)
+    write_results(result_df, pckg_name="scgco", analysis="svgenes")
 
 
 args = parse_args()

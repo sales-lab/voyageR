@@ -24,7 +24,7 @@ boostgp_workflow <- function(spe) {
     coords <- coords[rownames(counts),]
     res <- boost.gp(Y = counts, loc = coords, )
 
-    write_results(res)
+    write_results(res, pckg_name="boostgp", analysis="svgenes")
 }
 
 args <- commandArgs(trailingOnly = TRUE)

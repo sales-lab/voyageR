@@ -39,7 +39,7 @@ giotto_workflow <- function(spe) {
     sil_spatialgenes <- silhouetteRank(gobject = mbrain, expression_values = 'normalized')
     sil_spatialgenes <- sil_spatialgenes[order(sil_spatialgenes$scores, decreasing = T), ]
 
-    write_results(sil_spatialgenes, extra_name="_silhouette")
+    write_results(sil_spatialgenes, pckg_name="giotto", analysis="svgenes", extra_name="_silhouette")
 }
 
 

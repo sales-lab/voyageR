@@ -29,7 +29,7 @@ markvariogram_workflow <- function(seurat_object) {
 
     result <- SpatiallyVariableFeatures(seurat_object, selection.method = "markvariogram")
 
-    write_results(result, extra_name="_markvariogram")
+    write_results(result, pckg_name="seurat", analysis="svgenes", extra_name="_markvariogram")
 }
 
 args <- commandArgs(trailingOnly = TRUE)

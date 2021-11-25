@@ -42,7 +42,7 @@ giotto_workflow_binspect_kmeans <- function(spe) {
     km_spatialgenes <- binSpect(mbrain, calc_hub = T, hub_min_int = 5,spatial_network_name = 'spatial_network')
     km_spatialgenes <- km_spatialgenes[order(km_spatialgenes$adj.p.value), ]
     # km_spatialgenes <- km_spatialgenes[km_spatialgenes$adj.p.value < 0.05, ]
-    write_results(km_spatialgenes, extra_name="_binSpect_kmeans")
+    write_results(km_spatialgenes, pckg_name="giotto", analysis="svgenes", extra_name="_binSpect_kmeans")
 }
 
 

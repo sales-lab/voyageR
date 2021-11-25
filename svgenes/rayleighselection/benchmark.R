@@ -31,7 +31,7 @@ rayleighselection_workflow <- function(spe){
     # Full dataset
     results <- rayleigh_selection(gg, data_tpm[, row.names(di)], num_perms = 1000, num_cores = 4, one_forms = FALSE)
 
-    write_results(results)
+    write_results(results, pckg_name="rayleighselection", analysis="svgenes")
 }
 
 

@@ -42,7 +42,7 @@ giotto_workflow_binspect_rank <- function(spe) {
     rank_spatialgenes = binSpect(mbrain, bin_method = 'rank', calc_hub = T, hub_min_int = 5,spatial_network_name = 'spatial_network')
     rank_spatialgenes <- rank_spatialgenes[order(rank_spatialgenes$adj.p.value), ]
     # rank_spatialgenes <- rank_spatialgenes[rank_spatialgenes$adj.p.value < 0.05, ]
-    write_results(rank_spatialgenes, extra_name="_binSpect_rank")
+    write_results(rank_spatialgenes, pckg_name="giotto", analysis="svgenes", extra_name="_binSpect_rank")
 }
 
 

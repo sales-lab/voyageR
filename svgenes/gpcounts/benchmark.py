@@ -65,7 +65,7 @@ def gpcounts_workflow(counts):
     log_likelihood_ratio = gp_counts.One_sample_test(likelihood)
     results = gp_counts.calculate_FDR(log_likelihood_ratio)
     results['gene'] = results.index
-    write_results(results)
+    write_results(results, pckg_name="gpcounts", analysis="svgenes")
 
 
 args = parse_args()

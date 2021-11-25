@@ -24,7 +24,7 @@ spark_workflow <- function(spe) {
     spark <- SPARK::spark.test(spark, check_positive = TRUE, verbose = FALSE)
     sink()
 
-    write_results(spark@res_mtest, extra_name="_spark")
+    write_results(spark@res_mtest, pckg_name="spark", analysis="svgenes", extra_name="_spark")
 }
 
 args <- commandArgs(trailingOnly = TRUE)
