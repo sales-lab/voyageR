@@ -21,7 +21,7 @@ sparkx_workflow <- function(spe) {
     sparkX <- sparkx(counts, coords, numCores=4, option="mixture")
     sink()
 
-    write_results(sparkX$res_mtest, extra_name="_sparkX")
+    write_results(sparkX$res_mtest, pckg_name="spark", analysis="svgenes", extra_name="_sparkX")
 }
 
 

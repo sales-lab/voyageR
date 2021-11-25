@@ -29,7 +29,7 @@ moransi_workflow <- function(seurat_object) {
 
     result <- SpatiallyVariableFeatures(seurat_object, selection.method = "moransi")
 
-    write_results(result, extra_name="_moransi")
+    write_results(result, pckg_name="seurat", analysis="svgenes", extra_name="_moransi")
 }
 
 

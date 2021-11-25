@@ -34,8 +34,9 @@ load_SpE <- function(dataset){
 }
 
 
-write_results <- function(df, extra_name = ""){
-    write.table(df, file = paste("results", extra_name, ".csv", sep=""), quote = FALSE, sep="\t", 
+write_results <- function(df, pckg_name, analysis, extra_name = ""){
+    path_results <- paste0("/results/", analysis, "/", pckg_name)
+    write.table(df, file = paste0(path_results, "/", "results", extra_name, ".csv"), quote = FALSE, sep="\t", 
             row.names = T, col.name = NA)
 }
 

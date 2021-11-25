@@ -18,7 +18,7 @@ stutility_workflow <- function(seurat_object){
 
     results <- CorSpatialGenes(seurat_object)
 
-    write_results(results)
+    write_results(results, pckg_name="stutility", analysis="svgenes")
 }
 
 

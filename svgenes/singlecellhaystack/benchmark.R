@@ -30,7 +30,7 @@ singleCellHaystack_workflow <- function(seurat_object) {
 	results <- show_result_haystack(res)
 	results$gene <- row.names(results)
 
-	write_results(results)
+	write_results(results, pckg_name="singlecellhaystack", analysis="svgenes")
 }
 
 

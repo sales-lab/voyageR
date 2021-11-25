@@ -41,7 +41,7 @@ meringue_workflow <- function(spe) {
     )
 
     ordered_res <- results.filter[order(results.filter$p.adj),]
-    write.table(ordered_res, file = "results.csv", quote = FALSE, sep="\t", row.names = T, col.name = NA)
+    write_results(ordered_res, pckg_name="meringue", analysis="svgenes")
 }
 
 

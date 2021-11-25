@@ -64,7 +64,7 @@ def gliss_workflow(rawcounts, num_exp_genes=0.01, num_exp_spots=0.01, min_expres
     reject = np.array([False] * len(pvals))
     reject[rej_idx] = True
     result = pd.DataFrame({'pvalue': pvals, 'reject': reject, 'geneID':data_norm.columns}, index=data_norm.columns)
-    write_results(result)
+    write_results(result, pckg_name="gliss", analysis="svgenes")
 
 
 args = parse_args()

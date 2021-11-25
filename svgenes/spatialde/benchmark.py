@@ -31,7 +31,7 @@ def spatialde_workflow(counts, coords):
     # Full dataset
     results = SpatialDE.run(X, resid_expr)
 
-    write_results(results)
+    write_results(results, pckg_name="spatialde", analysis="svgenes")
 
 
 args = parse_args()

@@ -36,7 +36,7 @@ def somde_workflow(counts, coord):
     nres = som.norm()
 
     result, SVnum =som.run()
-    write_results(result)
+    write_results(result, pckg_name="somde", analysis="svgenes")
 
 
 args = parse_args()
