@@ -5,6 +5,7 @@ MASS
 Rcpp
 RcppArmadillo
 RcppDist
+Rfast2
 RubD/Giotto
 Seurat
 SpatialExperiment
