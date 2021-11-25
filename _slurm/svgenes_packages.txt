@@ -1,0 +1,14 @@
+boostgp
+giotto
+gliss
+gpcounts
+jsta
+meringue
+rayleighselection
+scgco
+seurat
+singlecellhaystack
+somde
+spark
+spatialde
+stutility
