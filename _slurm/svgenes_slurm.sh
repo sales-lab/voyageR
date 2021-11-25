@@ -14,7 +14,7 @@
 
 dataset=$1
 
-package="$(tail -n +$SLURM_ARRAY_TASK_ID svgenes_packages.txt | head -n1)"
+package="$(tail -n +$SLURM_ARRAY_TASK_ID packages_svgenes.txt | head -n1)"
 
 mount_host=results/svgenes/${package}
 mount_container=/results/svgenes/${package}
