@@ -73,7 +73,7 @@ RUN cd /repos/JSTA \
 # Final setup
 
 RUN mkdir -p /benchmark/datasets /benchmark/svgenes
-COPY datasets /benchmark/datasets/
+COPY datasets/*.h5ad /benchmark/datasets/
 COPY svgenes /benchmark/svgenes/
 
 COPY utils.R /benchmark/
@@ -81,7 +81,7 @@ COPY spe2seurat.R /benchmark/
 COPY utils_anndata.py /benchmark/
 COPY benchmark_svgenes.sh /benchmark/
 
-RUN find /benchmark -name '*.sh' -or -name '*.py' -or -name '*.R' -exec chmod 755 {} \;
+RUN find /benchmark \( -name '*.sh'  -or -name '*.py' -or -name '*.R' \) -exec chmod 755 {} \;
 
 ENV LC_ALL=C
 
