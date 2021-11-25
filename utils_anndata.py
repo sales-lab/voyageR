@@ -48,5 +48,6 @@ def load_anndata(dataset):
     return ad
 
 
-def write_results(df, filename="results.csv"):
-    df.to_csv(filename, header=True, index=False, sep="\t")
+def write_results(df, pckg_name, analysis, filename="results.csv"):
+    path_results = f"/results/{analysis}/{pckg_name}"
+    df.to_csv(f"{path_results}/{filename}", header=True, index=False, sep="\t")
