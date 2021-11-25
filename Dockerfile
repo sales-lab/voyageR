@@ -9,7 +9,7 @@ RUN find /tmp/apt/ -type f -exec install --mode=644 {} /etc/apt/apt.conf.d \; \
  && sed -i '/^Templates:/a Frontend: noninteractive' /etc/debconf.conf \
  && apt-get update \
  && apt-get dist-upgrade --yes \
- && apt-get install --yes build-essential curl wget git less nano gnupg2 time \
+ && apt-get install --yes build-essential curl wget git less nano gnupg2 time collectl \
         libcurl4-openssl-dev libmagick++-dev libgmp-dev libgsl-dev \
         libfftw3-dev libudunits2-dev libgdal-dev libgmp3-dev libssl-dev \
         zlib1g-dev libncurses5-dev libgdbm-dev libnss3-dev libsqlite3-dev \
@@ -83,7 +83,7 @@ COPY benchmark_svgenes.sh /benchmark/
 
 RUN find /benchmark \( -name '*.sh'  -or -name '*.py' -or -name '*.R' \) -exec chmod 755 {} \;
 
-RUN mkdir -p /results
+RUN mkdir -p /results/svgenes
 
 ENV LC_ALL=C
 
