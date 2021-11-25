@@ -13,3 +13,5 @@ svgenes/gliss/src
 /**/*.ipynb
 /**/Rep11_MOB_0.csv
 /**/MOB_sample_info.csv
+/singularity
+/**/*.simg
