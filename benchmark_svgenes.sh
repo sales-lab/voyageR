@@ -21,7 +21,6 @@ while getopts ":p:d:o:h" options; do
   case $options in
     p ) package=$OPTARG;;
     d ) dataset=$OPTARG;;
-    o ) output_folder=$OPTARG;;
     h ) usage
             exit 1;;
   esac
@@ -50,17 +49,13 @@ if [ ! -f "$FILE" ]; then
     Rscript -e "source('utils.R'); spe_to_h5ad('${dataset}', '${FILE}')"
 fi
 
-if [ ! -d $output_folder ]; then
-    echo 'No output folder supplied'
-    exit 1
-fi
-
-package_output_folder=${output_folder}/${package}
+output_folder=/results/svgenes/${package}
 DIR="/benchmark/svgenes/${package}"
+
 if [ -d "$DIR" ]; then  
-  mkdir -p ${package_output_folder}
+  mkdir -p ${output_folder}
   cd "/benchmark/svgenes/_execute/"
-  ./${package}.sh ${dataset} ${package_output_folder}
+  ./${package}.sh ${dataset} ${output_folder}
 else
   ###  Control will jump here if $DIR does NOT exists ###
   echo "Error: package '${package}' not found."
