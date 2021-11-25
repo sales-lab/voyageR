@@ -81,6 +81,8 @@ COPY spe2seurat.R /benchmark/
 COPY utils_anndata.py /benchmark/
 COPY benchmark_svgenes.sh /benchmark/
 
+RUN find /benchmark -name '*.sh' -or -name '*.py' -or -name '*.R' -exec chmod 755 {} \;
+
 ENV LC_ALL=C
 
 WORKDIR /benchmark
