@@ -6,7 +6,7 @@
 #SBATCH --cpus-per-task=4
 #SBATCH --mem=50G
 #SBATCH --nodelist=xen5
-#SBATCH --array=1-14
+#SBATCH --array=1-2
 
 #
 # Copyright 2021 Davide Corso
