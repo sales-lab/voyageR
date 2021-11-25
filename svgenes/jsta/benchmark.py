@@ -27,7 +27,7 @@ def jsta_workflow(counts, coords):
     counts.reset_index(inplace=True, drop=True)
 
     # Partial dataset
-    counts = counts.iloc[:, :5]
+    # counts = counts.iloc[:, :5]
 
     nneighbors = 10
     nperm = 1000

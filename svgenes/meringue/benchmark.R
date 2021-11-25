@@ -26,6 +26,7 @@ meringue_workflow <- function(spe) {
     # test <- sample(rownames(mat), 100)
     # I <- getSpatialPatterns(mat[test,], w)
 
+    # Full dataset
     I <- getSpatialPatterns(mat, w)
     
     results.filter <- filterSpatialPatterns(

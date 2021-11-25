@@ -17,10 +17,10 @@ def somde_workflow(counts, coord):
     df = counts
 
     # Partial Dataset: 100 genes dataset only for run demo
-    df = df.loc[list(df.index)[:100], list(coord.index)]
+    # df = df.loc[list(df.index)[:100], list(coord.index)]
     
     # Full dataset
-    # df = df.loc[:, list(coord.index)]
+    df = df.loc[:, list(coord.index)]
 
     X=coord[['x','y']].values.astype(np.float32)
 

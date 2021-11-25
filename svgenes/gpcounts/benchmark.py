@@ -23,8 +23,6 @@ from utils_anndata import parse_args, detach_anndata, load_anndata, write_result
 
 def gpcounts_workflow(counts):
     # Y is the spatial expression count matrix. Genes on column and coords on rows
-
-    # Y = pd.read_csv('Rep11_MOB_0.csv', index_col=[0])
     Y = counts
     Y = Y.T[Y.sum(0) >= 3].T # Filter out genes with less than 3 total counts
 
@@ -51,10 +49,10 @@ def gpcounts_workflow(counts):
     Y = Y.T
     
     # Partial dataset: 10 genes dataset only for run demo
-    Y_run = Y.iloc[0:1,:]
+    # Y_run = Y.iloc[0:1,:]
 
     # Full dataset
-    # Y_run = Y
+    Y_run = Y
 
     X = X[['x', 'y']]
 

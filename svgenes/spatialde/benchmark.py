@@ -25,11 +25,11 @@ def spatialde_workflow(counts, coords):
     X = sample_info[['x', 'y']]
 
     # Partial dataset: 100 genes dataset only for run demo
-    sample_resid_expr = resid_expr.sample(n=100, axis=1, random_state=1)
-    results = SpatialDE.run(X, sample_resid_expr)
+    # sample_resid_expr = resid_expr.sample(n=100, axis=1, random_state=1)
+    # results = SpatialDE.run(X, sample_resid_expr)
 
     # Full dataset
-    # results = SpatialDE.run(X, resid_expr)
+    results = SpatialDE.run(X, resid_expr)
 
     write_results(results)
 
