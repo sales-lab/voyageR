@@ -14,16 +14,12 @@ from utils_anndata import parse_args, detach_anndata, load_anndata, write_result
 
 
 def somde_workflow(counts, coord):
-    # countfile = "Rep11_MOB_0.csv"
-    # coordfile = "MOB_sample_info.csv"
-
-    # df = pd.read_csv(countfile, sep=",", index_col=0).T
-    # coord = pd.read_csv(coordfile, sep=",", index_col=0)
     df = counts
 
-    # 100 genes dataset only for run demo
+    # Partial Dataset: 100 genes dataset only for run demo
     df = df.loc[list(df.index)[:100], list(coord.index)]
     
+    # Full dataset
     # df = df.loc[:, list(coord.index)]
 
     X=coord[['x','y']].values.astype(np.float32)

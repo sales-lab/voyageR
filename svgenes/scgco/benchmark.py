@@ -67,10 +67,11 @@ def scgco_preprocess(counts, num_exp_genes, num_exp_spots, min_expression, drop)
 def scgco_workflow(counts, num_exp_genes=0.01, num_exp_spots=0.01, min_expression=1, drop = False):
     locs, data, _ = scgco_preprocess(counts, num_exp_genes=num_exp_genes, num_exp_spots=num_exp_spots, min_expression=min_expression, drop = False)
 
-    # 100 genes dataset only for run demo
+    # Partial dataset: 100 genes dataset only for run demo
     full_data_norm = normalize_count_cellranger(data)
     data_norm = full_data_norm.iloc[:, 0:1000]
 
+    # Full dataset
     # data_norm = normalize_count_cellranger(data)
 
     exp = data_norm.iloc[:,0]

@@ -4,7 +4,7 @@
 #
 
 library(MERINGUE)
-source("../../utils.R")
+source("/benchmark/utils.R")
 
 meringue_workflow <- function(spe) {
     tokens <- detach_SpE(spe)
@@ -19,7 +19,10 @@ meringue_workflow <- function(spe) {
 
     # Get neighbor-relationships
     w <- getSpatialNeighbors(coords, filterDist = 25)
+    
     # Identify sigificantly spatially auto-correlated genes
+    
+    # Partial dataset
     # test <- sample(rownames(mat), 100)
     # I <- getSpatialPatterns(mat[test,], w)
 

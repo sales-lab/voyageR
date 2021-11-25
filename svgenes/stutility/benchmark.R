@@ -5,9 +5,11 @@
 
 library(STutility)
 library(spdep)
-library(bench)
-source("../../utils.R")
-source("../../spe2seurat.R")
+source("/benchmark/utils.R")
+source("/benchmark/spe2seurat.R")
+
+# Note: there is no line for Partial dataset
+
 
 stutility_workflow <- function(seurat_object){
     seurat_object <- LoadImages(seurat_object, time.resolve = FALSE, verbose = TRUE)

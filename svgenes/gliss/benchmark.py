@@ -48,10 +48,11 @@ def gliss_workflow(rawcounts, num_exp_genes=0.01, num_exp_spots=0.01, min_expres
 
     locs, counts = gliss_preprocess(rawcounts, num_exp_genes=num_exp_genes, num_exp_spots=num_exp_spots, min_expression=min_expression)
 
-    # 100 genes dataset only for run demo
+    # Partial dataset: 100 genes dataset only for run demo
     # full_data_norm = normalize_count_cellranger(counts)
     # data_norm = full_data_norm.iloc[:, :100]
 
+    # Full dataset
     data_norm = normalize_count_cellranger(counts)
 
     alpha = 0.01 # FDR Level

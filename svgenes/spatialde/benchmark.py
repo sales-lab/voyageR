@@ -14,8 +14,6 @@ from utils_anndata import parse_args, detach_anndata, load_anndata, write_result
 
 
 def spatialde_workflow(counts, coords):
-    # counts = pd.read_csv('Rep11_MOB_0.csv', index_col=0)
-    # sample_info = pd.read_csv('MOB_sample_info.csv', index_col=0)
     sample_info = coords
 
     counts = counts.T[counts.sum(0) >= 3].T  # Filter practically unobserved genes
@@ -26,10 +24,11 @@ def spatialde_workflow(counts, coords):
 
     X = sample_info[['x', 'y']]
 
-    # 100 genes dataset only for run demo
+    # Partial dataset: 100 genes dataset only for run demo
     sample_resid_expr = resid_expr.sample(n=100, axis=1, random_state=1)
     results = SpatialDE.run(X, sample_resid_expr)
 
+    # Full dataset
     # results = SpatialDE.run(X, resid_expr)
 
     write_results(results)

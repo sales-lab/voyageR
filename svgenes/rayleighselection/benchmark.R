@@ -5,7 +5,7 @@
 
 
 library(RayleighSelection)
-source("../../utils.R")
+source("/benchmark/utils.R")
 
 rayleighselection_workflow <- function(spe){
     tokens <- detach_SpE(spe)
@@ -25,8 +25,10 @@ rayleighselection_workflow <- function(spe){
     di <- as.matrix(dist(coords[cells, spatialCoordsNames(spe)]))
     gg <- vr_complex(di, median(di), clique = FALSE)
 
-    # TODO: change num_perm for true benchmark. Set to 1000
+    # Partial dataset
     # results <- rayleigh_selection(gg, data_tpm[, row.names(di)], num_perms = 10, num_cores = 2, one_forms = FALSE)
+
+    # Full dataset
     results <- rayleigh_selection(gg, data_tpm[, row.names(di)], num_perms = 1000, num_cores = 4, one_forms = FALSE)
 
     write_results(results)

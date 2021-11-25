@@ -6,7 +6,7 @@
 system("ln -sf /repos/BOOST-GP/R .")
 
 source("R/boost.gp.R")
-source("../../utils.R")
+source("/benchmark/utils.R")
 
 boostgp_workflow <- function(spe) {
     tokens <- detach_SpE(spe)
@@ -14,11 +14,14 @@ boostgp_workflow <- function(spe) {
     coords <- tokens$coords
 
     # a count matrix with each row representing one spatial location, and each column representing one gene.
+
+    # Partial dataset
     # counts <- t(counts[1:2, 1:100])
 
+    # Full dataset
     counts <- t(counts)
-    coords <- coords[rownames(counts),]
 
+    coords <- coords[rownames(counts),]
     res <- boost.gp(Y = counts, loc = coords, )
 
     write_results(res)

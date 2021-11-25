@@ -5,7 +5,7 @@
 
 library(SPARK)
 library(Matrix)
-source("../../utils.R")
+source("/benchmark/utils.R")
 
 
 sparkx_workflow <- function(spe) {
@@ -14,8 +14,8 @@ sparkx_workflow <- function(spe) {
     coords <- tokens$coords
     colnames(coords) <- c("x", "y")
 
-    # 100 genes (partial counts)
-#     counts <- counts[1:10, ]
+    # Partial dataset: 100 genes (partial counts)
+    # counts <- counts[1:10, ]
 
     sink("/dev/null")
     sparkX <- sparkx(counts, coords, numCores=4, option="mixture")

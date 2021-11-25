@@ -5,18 +5,25 @@
 
 
 library(Seurat)
-library(bench)
-source("../../utils.R")
-source("../../spe2seurat.R")
+source("/benchmark/utils.R")
+source("/benchmark/spe2seurat.R")
 
 moransi_workflow <- function(seurat_object) {
     seurat_object <- SCTransform(seurat_object, assay = "Spatial", verbose = FALSE)
 
-    # 100 genes dataset only for run demo
+    # Partial dataset: 100 genes dataset only for run demo
+    # seurat_object <- FindSpatiallyVariableFeatures(
+        # seurat_object, 
+        # assay = "SCT", 
+        # features = VariableFeatures(seurat_object)[1:100], 
+        # selection.method = "moransi"
+    # )
+
+    # Full dataset
     seurat_object <- FindSpatiallyVariableFeatures(
         seurat_object, 
         assay = "SCT", 
-        features = VariableFeatures(seurat_object), # [1:100], 
+        features = VariableFeatures(seurat_object),
         selection.method = "moransi"
     )
 

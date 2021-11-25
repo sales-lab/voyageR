@@ -26,6 +26,7 @@ def jsta_workflow(counts, coords):
     locs = np.array([[coords.loc[i].x, coords.loc[i].y] for i in counts.index])
     counts.reset_index(inplace=True, drop=True)
 
+    # Partial dataset
     counts = counts.iloc[:, :5]
 
     nneighbors = 10

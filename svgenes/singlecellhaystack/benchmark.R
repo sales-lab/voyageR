@@ -7,11 +7,12 @@
 
 library(Seurat)
 library(singleCellHaystack)
-library(bench)
-source("../../utils.R")
-source("../../spe2seurat.R")
+source("/benchmark/utils.R")
+source("/benchmark/spe2seurat.R")
 
 set.seed(1)
+
+# Note: there is no line for Partial dataset
 
 singleCellHaystack_workflow <- function(seurat_object) {
 	counts <- GetAssayData(seurat_object, slot = "counts")

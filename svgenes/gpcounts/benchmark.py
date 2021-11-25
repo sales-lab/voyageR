@@ -49,9 +49,13 @@ def gpcounts_workflow(counts):
     scalesdf=scalesdf.T
 
     Y = Y.T
-    # 10 genes dataset only for run demo
+    
+    # Partial dataset: 10 genes dataset only for run demo
     Y_run = Y.iloc[0:1,:]
+
+    # Full dataset
     # Y_run = Y
+
     X = X[['x', 'y']]
 
     gene_name = []

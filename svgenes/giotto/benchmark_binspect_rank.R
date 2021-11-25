@@ -7,8 +7,7 @@
 #
 
 library(Giotto)
-library(bench)
-source("../../utils.R")
+source("/benchmark/utils.R")
 
 giotto_workflow_binspect_rank <- function(spe) {
     tokens <- detach_SpE(spe)
@@ -33,7 +32,7 @@ giotto_workflow_binspect_rank <- function(spe) {
     ## normalize
     mbrain <- normalizeGiotto(gobject = mbrain, scalefactor = 6000, verbose = T)
 
-    # 10 genes dataset only for run demo
+    # Partial Dataset: 10 genes dataset only for run demo
     # demo_genes <- slot(mbrain, 'gene_ID')[1:100]
     # mbrain <- subsetGiotto(mbrain, gene_ids = demo_genes)
 

@@ -4,7 +4,7 @@
 #
 
 library(SPARK)
-source("../../utils.R")
+source("/benchmark/utils.R")
 
 
 spark_workflow <- function(spe) {
@@ -12,8 +12,8 @@ spark_workflow <- function(spe) {
     counts <- tokens$counts
     coords <- tokens$coords
 
-    # 100 genes (partial counts)
-#     counts <- counts[1:10, ]
+    # Partial dataset: 100 genes (partial counts)
+    # counts <- counts[1:10, ]
 
     spark <- SPARK::CreateSPARKObject(counts = counts, location = coords)
     spark@lib_size <- apply(spark@counts, 2, sum)
