@@ -55,6 +55,8 @@ RUN Rscript -e 'install.packages(c("BiocManager", "remotes")); \
                 cpus <- as.integer(system("nproc", intern = TRUE)); \
                 BiocManager::install(pkgs, ask = FALSE, Ncpus = cpus)'
 
+RUN Rscript -e 'BiocManager::install("jbergenstrahle/STUtility", ask = FALSE)'
+
 RUN Rscript -e 'pkgs <- readLines("/tmp/r.txt"); \
                 clean <- tolower(sub("^.*/", "", pkgs)); \
                 inst <- tolower(installed.packages()[, "Package"]); \
