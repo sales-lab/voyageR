@@ -18,4 +18,4 @@ output_folder=$2
 package="$(tail -n +$SLURM_ARRAY_TASK_ID _slurm/svgenes_packages.txt | head -n1)"
 
 
-bash /benchmark/benchmark_svgenes.sh -p ${package} -d ${dataset} -o ${output_folder}
+singularity exec voyager bash /benchmark/benchmark_svgenes.sh -p ${package} -d ${dataset} -o ${output_folder}
