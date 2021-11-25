@@ -13,9 +13,13 @@
 #
 
 dataset=$1
-output_folder=$2
 
 package="$(tail -n +$SLURM_ARRAY_TASK_ID svgenes_packages.txt | head -n1)"
 
+mount_host=results_svg/${package}
+mount_container=/results/svgenes/${package}
 
-singularity exec singularity/voyager.simg bash /benchmark/benchmark_svgenes.sh -p ${package} -d ${dataset} -o ${output_folder}
+
+mkdir -p ${mount_host}
+
+singularity exec --bind ${mount_host}:${mount_container} singularity/voyager.simg bash /benchmark/benchmark_svgenes.sh -p ${package} -d ${dataset}
