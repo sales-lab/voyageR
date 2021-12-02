@@ -54,8 +54,8 @@ DIR="/benchmark/svgenes/${package}"
 
 if [ -d "$DIR" ]; then  
   mkdir -p ${output_folder}
-  cd "/benchmark/svgenes/_execute/"
-  ./${package}.sh ${dataset} ${output_folder}
+  cd ${output_folder}
+  bash /benchmark/svgenes/_execute/${package}.sh ${dataset}
 else
   ###  Control will jump here if $DIR does NOT exists ###
   echo "Error: package '${package}' not found."
