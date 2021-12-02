@@ -32,18 +32,24 @@ def jsta_workflow(counts, coords):
     nneighbors = 10
     nperm = 1000
 
-    ps_vec = get_spatial_pval(
-        cells_mat = counts,
-        celltypes = np.array(['cts' for i in range(counts.shape[0])]),
-        cell_cent = locs,
-        ct = 'cts', 
-        nneighbors = nneighbors,
-        nperm = nperm
-    )
-    genes = counts.columns
+    genes = list(counts.columns)
     pvals_gene_list = []
-    for pval, gene_index in ps_vec:
-        pvals_gene_list.append([pval, genes[gene_index]])
+
+    for gidx in range(counts.shape[1]):
+        local_counts = counts.iloc[:, [gidx]]
+        
+        ps_vec = get_spatial_pval(
+            cells_mat = local_counts,
+            celltypes = np.array(['cts' for i in range(counts.shape[0])]),
+            cell_cent = locs,
+            ct = 'cts', 
+            nneighbors = nneighbors,
+            nperm = nperm
+        )
+
+        assert len(ps_vec) == 1
+        pval = ps_vec[0][0]
+        pvals_gene_list.append([pval, genes[gidx]])
     
     fdrs = fdrcorrection([i[0] for i in pvals_gene_list], alpha=0.05, method='indep', is_sorted=False)[1]
     results = pd.DataFrame([[fdrs[i], pvals_gene_list[i][1]] for i in range(len(fdrs))], columns=["adjusted_pvalue", "gene"])
