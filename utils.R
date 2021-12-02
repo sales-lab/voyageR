@@ -26,7 +26,7 @@ load_SpE <- function(dataset){
            # retrieve dataset of interest
            pat <- dataset
            idx <- grep(pat, q$title)
-           id <- q$ah_id[idx][1]
+           id <- q$ah_id[idx][2]
            spe <- suppressMessages(eh[[id]])
        })
 
