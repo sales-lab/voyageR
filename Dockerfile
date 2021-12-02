@@ -18,6 +18,9 @@ RUN find /tmp/apt/ -type f -exec install --mode=644 {} /etc/apt/apt.conf.d \; \
  && rm -rf /var/lib/apt/lists/*
 
 
+## Setup folders
+RUN mkdir -p /repos /benchmark/datasets /benchmark/svgenes /results/svgenes
+
 # Languages
 
 ## Python
@@ -36,12 +39,9 @@ RUN apt-key adv --keyserver keyserver.ubuntu.com \
  && apt-get clean \
  && rm -rf /var/lib/apt/lists/*
 
-
-# Repositories
-
+## Repositories
 COPY dependencies/repos.txt /tmp/
-RUN mkdir /repos \
- && cd /repos \
+RUN cd /repos \
  && while read repo; do git clone --depth=1 "$repo"; done </tmp/repos.txt \
  && rm -f /tmp/repos.txt
 
@@ -60,6 +60,7 @@ RUN Rscript -e 'BiocManager::install("jbergenstrahle/STUtility", ask = FALSE)'
 RUN Rscript -e 'pkgs <- readLines("/tmp/r.txt"); \
                 clean <- tolower(sub("^.*/", "", pkgs)); \
                 inst <- tolower(installed.packages()[, "Package"]); \
+                for (p in clean){ if(!(p %in% inst)){ print(paste0(p, " --> Not Installed"))} }; \
                 stopifnot(all(clean %in% inst))' \
  && rm -rf /tmp/r.txt
 
@@ -74,7 +75,7 @@ RUN cd /repos/JSTA \
 
 # Final setup
 
-RUN mkdir -p /benchmark/datasets /benchmark/svgenes
+
 COPY datasets/*.h5ad /benchmark/datasets/
 COPY svgenes /benchmark/svgenes/
 
@@ -84,8 +85,6 @@ COPY utils_anndata.py /benchmark/
 COPY benchmark_svgenes.sh /benchmark/
 
 RUN find /benchmark \( -name '*.sh'  -or -name '*.py' -or -name '*.R' \) -exec chmod 755 {} \;
-
-RUN mkdir -p /results/svgenes
 
 ENV LC_ALL=C
 
