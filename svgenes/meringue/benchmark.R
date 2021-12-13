@@ -20,7 +20,7 @@ meringue_workflow <- function(spe) {
     
     # CPM normalize
     mat <- normalizeCounts(counts = counts, 
-        log=FALSE,
+        log=TRUE,
         verbose=TRUE
     )
 
@@ -42,7 +42,7 @@ meringue_workflow <- function(spe) {
         w = w,
         adjustPv = TRUE,
         alpha = 0.05,
-        minPercentCells = 0.05,
+        minPercentCells = 0.10,
         verbose = TRUE,
         details = TRUE
     )
