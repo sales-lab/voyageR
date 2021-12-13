@@ -10,7 +10,14 @@ meringue_workflow <- function(spe) {
     tokens <- detach_SpE(spe)
     counts <- tokens$counts
     coords <- tokens$coords
-
+    
+    # remove poor datasets and genes with default parameters
+    counts <- cleanCounts(
+        counts=counts,
+        plot=FALSE,
+        verbose=TRUE
+    )
+    
     # CPM normalize
     mat <- normalizeCounts(counts = counts, 
         log=FALSE,
@@ -30,7 +37,7 @@ meringue_workflow <- function(spe) {
     I <- getSpatialPatterns(mat, w)
     
     results.filter <- filterSpatialPatterns(
-        mat = mat[test,],
+        mat = mat,
         I = I,
         w = w,
         adjustPv = TRUE,
