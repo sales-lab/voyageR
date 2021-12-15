@@ -12,12 +12,11 @@ Perform benchmark for specific package and dataset
 
 -p <package>        : Package.  Required.
 -d <dataset>        : 10xVisium dataset from TENxVisiumData Bioconductor package. Required.
--o <outputdir>      : Where to write output. Rquired
 -h                  : Print usage and exit.
 EOF
 }
 
-while getopts ":p:d:o:h" options; do
+while getopts ":p:d:h" options; do
   case $options in
     p ) package=$OPTARG;;
     d ) dataset=$OPTARG;;
