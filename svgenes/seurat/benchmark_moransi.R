@@ -27,7 +27,11 @@ moransi_workflow <- function(seurat_object) {
         selection.method = "moransi"
     )
 
-    result <- SpatiallyVariableFeatures(seurat_object, selection.method = "moransi")
+    result <- seurat_object[["SCT"]]@meta.features
+    result <- result[complete.cases(result), ]
+    result <- result[order(result$MoransI_p.value), ]
+    result$adj.pvalue <- p.adjust(result$MoransI_p.value, "BH")
+    result <- result[order(result$adj.pvalue), ]
 
     write_results(result, pckg_name="seurat", analysis="svgenes", extra_name="_moransi")
 }

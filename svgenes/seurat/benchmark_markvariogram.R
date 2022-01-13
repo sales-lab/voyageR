@@ -27,7 +27,8 @@ markvariogram_workflow <- function(seurat_object) {
         selection.method = "markvariogram"
     )
 
-    result <- SpatiallyVariableFeatures(seurat_object, selection.method = "markvariogram")
+    result <- seurat_object[["SCT"]]@meta.features
+    result <- result[complete.cases(result), ]
 
     write_results(result, pckg_name="seurat", analysis="svgenes", extra_name="_markvariogram")
 }
