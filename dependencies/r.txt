@@ -17,3 +17,4 @@ qvalue
 singleCellHaystack
 spatialLIBD
 xzhoulab/SPARK
+zellkonverter
