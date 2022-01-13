@@ -2,6 +2,8 @@ suppressMessages(library(TENxVisiumData))
 suppressMessages(library(SpatialExperiment))
 suppressMessages(library(SummarizedExperiment))
 suppressMessages(library(spatialLIBD))
+suppressMessages(library(zellkonverter))
+
 
 detach_SpE <- function(spe) {
     coords <- as.data.frame(SpatialExperiment::spatialCoords(spe))
