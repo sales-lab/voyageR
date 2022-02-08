@@ -12,6 +12,7 @@ def parse_args():
 
 def detach_anndata(ad, symbols=False, transpose_counts=False, coord_on_colnames=False, sep_coord_on_colnames = "x"):
     if symbols:
+        # TODO: Fix this section because it may happen that some symbols are duplicated in the data frame. So it is necessary to make symbols unique
         df = ad.to_df().T
         counts = pd.concat([df, ad.var], axis=1)
         counts.set_index("symbol", inplace=True)
