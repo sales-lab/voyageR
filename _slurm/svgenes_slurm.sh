@@ -16,9 +16,11 @@ dataset=$1
 
 package="$(tail -n +$SLURM_ARRAY_TASK_ID packages_svgenes.txt | head -n1)"
 
+echo "=== ${package} con ${dataset} ==="
+
 mount_host=results_${dataset}/svgenes/${package}
 mount_container=/results/svgenes/${package}
 
 mkdir -p ${mount_host}
 
-singularity exec --bind ${mount_host}:${mount_container} singularity/voyager.sif bash /benchmark/benchmark_svgenes.sh -p ${package} -d ${dataset}
+singularity exec --writable-tmpfs --bind ${mount_host}:${mount_container} singularity/voyager.sif bash /benchmark/benchmark_svgenes.sh -p ${package} -d ${dataset}
