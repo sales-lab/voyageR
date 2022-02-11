@@ -15,7 +15,7 @@
 package=$1
 dataset=$2
 
-mount_host=results_single/svgenes/${package}
+mount_host=results_single_${dataset}/svgenes/${package}
 mount_container=/results/svgenes/${package}
 
 mkdir -p ${mount_host}
