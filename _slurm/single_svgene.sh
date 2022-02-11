@@ -20,4 +20,4 @@ mount_container=/results/svgenes/${package}
 
 mkdir -p ${mount_host}
 
-singularity exec --bind ${mount_host}:${mount_container} singularity/voyager.simg bash /benchmark/benchmark_svgenes.sh -p ${package} -d ${dataset}
+singularity exec --bind ${mount_host}:${mount_container} singularity/voyager.sif bash /benchmark/benchmark_svgenes.sh -p ${package} -d ${dataset}
