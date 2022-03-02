@@ -9,7 +9,6 @@ def parse_args():
     parser = ArgumentParser(description='Benchmark python packages')
     parser.add_argument('dataset', help='Choose dataset for TENxVisiumData')
     parser.add_argument('libd_sample', help='Sample ID of spatialLIBD dataset.', 
-        required=True, type=str,
         choices=["151507", "151508", "151509", "151510", "151669", "151670", "151671", "151672", "151673", "151674", "151675", "151676", "null"])
     return parser.parse_args()
 
