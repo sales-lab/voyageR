@@ -2,9 +2,7 @@ library(Seurat)
 library(SpatialExperiment)
 
 
-spe2seurat <- function(dataset = "MouseBrainCoronal"){
-    spe <- load_SpE(dataset = dataset)
-
+spe2seurat <- function(spe){
     coords <- cbind.data.frame(spatialData(spe), spatialCoords(spe))
     colnames(coords) <- c("tissue", "row", "col", "imagerow", "imagecol")
 
