@@ -58,7 +58,8 @@ def jsta_workflow(counts, coords):
 
 args = parse_args()
 dataset = args.dataset
-ad = load_anndata(dataset)
+libd_sample = args.libd_sample
+ad = load_anndata(dataset, libd_sample)
 
 counts, coords, _ = detach_anndata(ad, symbols=False, transpose_counts=True, coord_on_colnames=False)
 
