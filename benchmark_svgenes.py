@@ -25,7 +25,7 @@ def main():
     if dataset != "spatialLIBD":
         libd_sample = "null"
 
-    file=f"/benchmark/datasets/SpE_{dataset}.h5ad"
+    file=f"/benchmark/datasets/SpE_{dataset}_{libd_sample}.h5ad"
     if not path.isfile(file):
         # Changing Working Directory
         chdir("/benchmark")
