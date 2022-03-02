@@ -75,14 +75,13 @@ RUN cd /repos/JSTA \
 
 # Final setup
 
-
-COPY datasets/*.h5ad /benchmark/datasets/
+# COPY datasets/*.h5ad /benchmark/datasets/
 COPY svgenes /benchmark/svgenes/
 
 COPY utils.R /benchmark/
 COPY spe2seurat.R /benchmark/
 COPY utils_anndata.py /benchmark/
-COPY benchmark_svgenes.sh /benchmark/
+COPY benchmark_svgenes.py /benchmark/
 
 RUN find /benchmark \( -name '*.sh'  -or -name '*.py' -or -name '*.R' \) -exec chmod 755 {} \;
 
