@@ -18,7 +18,7 @@ def main():
     output_folder = f"/results/svgenes/{package}"
     dir=f"/benchmark/svgenes/{package}"
 
-    if not path.isfile(dir):
+    if not path.isdir(dir):
         print(f"Error: package '{package}' not found.")
         exit(1)
 
@@ -31,11 +31,11 @@ def main():
         chdir("/benchmark")
         print("Downloading dataset as SpatialExperiment...")
         command = f"source('utils.R'); spe_to_h5ad('{dataset}', '{libd_sample}', '{file}')"
-        check_call(["Rscript", "-e", command ], shell=True)
+        check_call([f'Rscript -e "{command}"'], shell=True)
 
     check_call(["mkdir", "-p", output_folder])
     chdir(output_folder)
-    check_call(["bash", f"/benchmark/svgenes/_execute/{package}.sh", dataset, libd_sample], shell=True)
+    check_call([f"bash /benchmark/svgenes/_execute/{package}.sh {dataset} {libd_sample}"], shell=True)
 
 
 def parse_args():
