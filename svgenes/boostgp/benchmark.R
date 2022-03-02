@@ -28,8 +28,8 @@ boostgp_workflow <- function(spe) {
 }
 
 args <- commandArgs(trailingOnly = TRUE)
-stopifnot(length(args) == 1)
 dataset <- args[1]
+libd_sample <- args[2]
 
-spe <- load_SpE(dataset=dataset)
+spe <- load_SpE(dataset=dataset, libd_sample=libd_sample)
 boostgp_workflow(spe)

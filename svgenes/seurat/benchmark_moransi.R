@@ -39,6 +39,8 @@ moransi_workflow <- function(seurat_object) {
 
 args <- commandArgs(trailingOnly = TRUE)
 dataset <- args[1]
+libd_sample <- args[2]
 
-se1 <- spe2seurat(dataset=dataset)
+spe <- load_SpE(dataset=dataset, libd_sample=libd_sample)
+se1 <- spe2seurat(spe)
 moransi_workflow(se1)

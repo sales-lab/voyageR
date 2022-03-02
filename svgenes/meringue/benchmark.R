@@ -54,6 +54,7 @@ meringue_workflow <- function(spe) {
 
 args <- commandArgs(trailingOnly = TRUE)
 dataset <- args[1]
+libd_sample <- args[2]
 
-spe <- load_SpE(dataset=dataset)
+spe <- load_SpE(dataset=dataset, libd_sample=libd_sample)
 meringue_workflow(spe)
