@@ -2,6 +2,7 @@ from argparse import ArgumentParser
 import anndata
 import numpy as np
 import pandas as pd
+import _pickle as cPickle
 
 
 def parse_args():
@@ -49,6 +50,7 @@ def load_anndata(dataset):
     return ad
 
 
-def write_results(df, pckg_name, analysis, filename="results.csv"):
+def write_results(df, pckg_name, analysis, filename="results"):
     path_results = f"/results/{analysis}/{pckg_name}"
-    df.to_csv(f"{path_results}/{filename}", header=True, index=False, sep="\t")
+    df.to_csv(f"{path_results}/{filename}.csv", header=True, index=False, sep="\t")
+    df.to_pickle(f"{path_results}/{filename}.pkl") 
