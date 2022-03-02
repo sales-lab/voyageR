@@ -17,9 +17,9 @@ libd_sample=$3
 
 if [ $dataset == "spatialLIBD" ]
 then
-   dataset_name = "${dataset}_${libd_sample}"
+   dataset_name="${dataset}_${libd_sample}"
 else
-   dataset_name = "${dataset}"
+   dataset_name="${dataset}"
 fi
 
 mount_host=results_single_${dataset_name}/svgenes/${package}

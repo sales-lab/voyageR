@@ -20,9 +20,9 @@ echo "=== package: ${package} === dataset: ${dataset} === libd_sample: ${libd_sa
 
 if [ $dataset == "spatialLIBD" ]
 then
-   dataset_name = "${dataset}_${libd_sample}"
+   dataset_name="${dataset}_${libd_sample}"
 else
-   dataset_name = "${dataset}"
+   dataset_name="${dataset}"
 fi
 
 mount_host=results_${dataset_name}/svgenes/${package}
