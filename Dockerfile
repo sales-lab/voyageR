@@ -13,7 +13,7 @@ RUN find /tmp/apt/ -type f -exec install --mode=644 {} /etc/apt/apt.conf.d \; \
         libcurl4-openssl-dev libmagick++-dev libgmp-dev libgsl-dev \
         libfftw3-dev libudunits2-dev libgdal-dev libgmp3-dev libssl-dev \
         zlib1g-dev libncurses5-dev libgdbm-dev libnss3-dev libsqlite3-dev \
-        libreadline-dev libffi-dev libbz2-dev \
+        libreadline-dev libffi-dev libbz2-dev tmux \
  && apt-get clean \
  && rm -rf /var/lib/apt/lists/*
 
