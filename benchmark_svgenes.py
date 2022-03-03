@@ -25,8 +25,10 @@ def main():
     if dataset != "spatialLIBD":
         libd_sample = "null"
 
+    python_packages = ["gliss", "gpcounts", "jsta", "scgco", "somde", "spatialde"]
+
     file=f"/benchmark/datasets/SpE_{dataset}_{libd_sample}.h5ad"
-    if not path.isfile(file):
+    if not path.isfile(file) and package in python_packages:
         # Changing Working Directory
         chdir("/benchmark")
         print("Downloading dataset as SpatialExperiment...")
