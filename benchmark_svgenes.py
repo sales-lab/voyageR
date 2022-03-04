@@ -30,14 +30,14 @@ def main():
     file=f"/benchmark/datasets/SpE_{dataset}_{libd_sample}.h5ad"
     if not path.isfile(file) and package in python_packages:
         # Changing Working Directory
-        chdir("/benchmark")
         print("Downloading dataset as SpatialExperiment...")
-        command = f"source('utils.R'); spe_to_h5ad('{dataset}', '{libd_sample}', '{file}')"
-        check_call([f'Rscript -e "{command}"'], shell=True)
+        cmd = f"Rscript -e \"source('/benchmark/utils.R'); spe_to_h5ad('{dataset}', '{libd_sample}', '{file}')\""
+        check_call(cmd, shell=True)
 
     check_call(["mkdir", "-p", output_folder])
     chdir(output_folder)
-    check_call([f"bash /benchmark/svgenes/_execute/{package}.sh {dataset} {libd_sample}"], shell=True)
+    execute_command = f"bash /benchmark/svgenes/_execute/{package}.sh {dataset} {libd_sample}"
+    check_call(execute_command, shell=True)
 
 
 def parse_args():
@@ -53,5 +53,3 @@ def parse_args():
 
 if __name__ == "__main__":
     main()
-
-
