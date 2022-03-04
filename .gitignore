@@ -15,5 +15,6 @@ svgenes/gliss/src
 /**/MOB_sample_info.csv
 /singularity
 /**/*.simg
+/**/*.sif
 /**/*slurm*.out
 /_slurm/results*
