@@ -25,14 +25,13 @@ def main():
     if dataset != "spatialLIBD":
         libd_sample = "null"
 
-    python_packages = ["gliss", "gpcounts", "jsta", "scgco", "somde", "spatialde"]
-
     file=f"/benchmark/datasets/SpE_{dataset}_{libd_sample}.h5ad"
-    if not path.isfile(file) and package in python_packages:
+    if not path.isfile(file):
         # Changing Working Directory
-        print("Downloading dataset as SpatialExperiment...")
-        cmd = f"Rscript -e \"source('/benchmark/utils.R'); spe_to_h5ad('{dataset}', '{libd_sample}', '{file}')\""
-        check_call(cmd, shell=True)
+        print(f"{file} not available")
+        exit(1)
+        # cmd = f"Rscript -e \"source('/benchmark/utils.R'); spe_to_h5ad('{dataset}', '{libd_sample}', '{file}')\""
+        # check_call(cmd, shell=True)
 
     check_call(["mkdir", "-p", output_folder])
     chdir(output_folder)
