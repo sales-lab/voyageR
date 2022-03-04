@@ -86,6 +86,7 @@ COPY benchmark_svgenes.py /benchmark/
 RUN find /benchmark \( -name '*.sh'  -or -name '*.py' -or -name '*.R' \) -exec chmod 755 {} \;
 
 RUN chmod a+rwX /benchmark/datasets
+RUN chmod a+rwX /results
 
 ENV LC_ALL=C
 
