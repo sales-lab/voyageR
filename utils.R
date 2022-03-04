@@ -3,6 +3,7 @@ suppressMessages(library(SpatialExperiment))
 suppressMessages(library(SummarizedExperiment))
 suppressMessages(library(spatialLIBD))
 suppressMessages(library(zellkonverter))
+suppressMessages(library(dbplyr))
 
 
 detach_SpE <- function(spe) {
