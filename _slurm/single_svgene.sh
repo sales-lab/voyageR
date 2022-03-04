@@ -15,6 +15,8 @@ package=$1
 dataset=$2
 libd_sample=$3
 
+echo "=== package: ${package} === dataset: ${dataset} === libd_sample: ${libd_sample} ==="
+
 if [ $dataset == "spatialLIBD" ]
 then
    dataset_name="${dataset}_${libd_sample}"

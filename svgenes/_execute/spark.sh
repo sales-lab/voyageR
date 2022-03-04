@@ -14,4 +14,3 @@ echo "======= SPARK ======="
 
 # Benchmark Spark-X
 /usr/bin/time -v -o ./bench_sparkX_${dataset}.txt Rscript /benchmark/svgenes/spark/benchmark_sparkX.R ${dataset} ${libd_sample} &> ./stdoe_sparkX_${dataset}.txt
-
