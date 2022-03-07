@@ -68,9 +68,8 @@ def gliss_workflow(rawcounts, num_exp_genes=0.01, num_exp_spots=0.01, min_expres
 
 
 args = parse_args()
-dataset = args.dataset
-libd_sample = args.libd_sample
-ad = load_anndata(dataset, libd_sample)
+base_file = args.base_file
+ad = load_anndata(base_file)
 
 counts, _, _ = detach_anndata(ad, symbols=False, transpose_counts=True, coord_on_colnames=True)
 
