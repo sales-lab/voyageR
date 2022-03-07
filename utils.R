@@ -15,7 +15,21 @@ detach_SpE <- function(spe) {
 }
 
 
-load_SpE <- function(dataset, libd_sample, shuffle){
+load_SpE <- function(base_file){
+    spe <- readRDS(paste0(base_file, ".rds"))
+    return(spe)
+}
+
+
+write_results <- function(df, pckg_name, analysis, extra_name = ""){
+    path_results <- paste0("/results/", analysis, "/", pckg_name)
+    write.table(df, file = paste0(path_results, "/", "results", extra_name, ".csv"), quote = FALSE, sep="\t", 
+            row.names = T, col.name = NA)
+    saveRDS(df, file = paste0(path_results, "/", "results", extra_name, ".rds"))
+}
+
+
+get_SpE_object <- function(dataset, libd_sample, shuffle){
     switch(dataset,
        spatialLIBD={
            spe <- spatialLIBD::fetch_data(type="spe")
@@ -38,6 +52,7 @@ load_SpE <- function(dataset, libd_sample, shuffle){
            spe <- suppressMessages(eh[[id]])
        })
     
+    stopifnot(shuffle %in% c("yes", "no"))
     if( shuffle ) {
         rownames(spatialCoords(spe)) <- rownames(spatialCoords(spe))[sample(1:nrow(spatialCoords(spe))) ]
         spatialCoords(spe) <- spatialCoords(spe)[match(colnames(spe), rownames(spatialCoords(spe))),]
@@ -47,18 +62,13 @@ load_SpE <- function(dataset, libd_sample, shuffle){
 }
 
 
-write_results <- function(df, pckg_name, analysis, extra_name = ""){
-    path_results <- paste0("/results/", analysis, "/", pckg_name)
-    write.table(df, file = paste0(path_results, "/", "results", extra_name, ".csv"), quote = FALSE, sep="\t", 
-            row.names = T, col.name = NA)
-    saveRDS(df, file = paste0(path_results, "/", "results", extra_name, ".rds"))
-}
+spe_to_files <- function(dataset, libd_sample, shuffle, filename){
+    spe <- get_SpE_object(dataset, libd_sample, shuffle)
+    
+    saveRDS(spe, file = paste0(filename, ".rds"))
 
-
-spe_to_h5ad <- function(dataset, libd_sample, filename){
-    spe <- load_SpE(dataset, libd_sample)
     stopifnot(all(rownames(colData(spe)) == rownames(spatialCoords(spe))))
     colData(spe) <- cbind(colData(spe), spatialCoords(spe))
     colData(spe)$scaleFactor <- imgData(spe)$scaleFactor
-    zellkonverter::writeH5AD(spe, filename)
+    zellkonverter::writeH5AD(spe, paste0(filename, ".h5ad"))
 }
