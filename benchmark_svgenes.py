@@ -30,8 +30,6 @@ def main():
         # Changing Working Directory
         print(f"{file} not available")
         exit(1)
-        # cmd = f"Rscript -e \"source('/benchmark/utils.R'); spe_to_h5ad('{dataset}', '{libd_sample}', '{file}')\""
-        # check_call(cmd, shell=True)
 
     check_call(["mkdir", "-p", output_folder])
     chdir(output_folder)
