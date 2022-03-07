@@ -14,6 +14,7 @@ def main():
     package = args.package
     dataset = args.dataset
     libd_sample = str(args.libd_sample)
+    shuffle = args.shuffle
 
     output_folder = f"/results/svgenes/{package}"
     dir=f"/benchmark/svgenes/{package}"
@@ -25,15 +26,27 @@ def main():
     if dataset != "spatialLIBD":
         libd_sample = "null"
 
-    file=f"/benchmark/datasets/SpE_{dataset}_{libd_sample}.h5ad"
-    if not path.isfile(file):
+    if shuffle == "yes":
+        base_file = f"/benchmark/datasets/spe_{dataset}_{libd_sample}_shuffled"
+    else:
+        base_file = f"/benchmark/datasets/spe_{dataset}_{libd_sample}"
+    
+    file_r=f"{base_file}.rds"
+    file_py=f"{base_file}.h5ad"
+    
+    if not path.isfile(file_r):
         # Changing Working Directory
-        print(f"{file} not available")
+        print(f"{file_r} R file not found")
+        exit(1)
+    
+    if not path.isfile(file_py):
+        # Changing Working Directory
+        print(f"{file_py} Python file not found")
         exit(1)
 
     check_call(["mkdir", "-p", output_folder])
     chdir(output_folder)
-    execute_command = f"bash /benchmark/svgenes/_execute/{package}.sh {dataset} {libd_sample}"
+    execute_command = f"bash /benchmark/svgenes/_execute/{package}.sh {base_file}"
     check_call(execute_command, shell=True)
 
 
@@ -42,9 +55,11 @@ def parse_args():
     parser.add_argument('--package', '-p', help='Package. Required', required=True)
     parser.add_argument('--dataset', '-d', help='SpatialLIBD or 10xVisium dataset from TENxVisiumData Bioconductor package. Required.', 
         required=True)
-    parser.add_argument('--libd_sample', '-l', help='Sample ID of spatialLIBD dataset. Put null if dataset != spatialLIBD (-l null).', 
+    parser.add_argument('--libd_sample', '-l', help='Sample ID of spatialLIBD dataset. null if dataset != spatialLIBD (-l null).', 
         required=True, type=str,
         choices=["151507", "151508", "151509", "151510", "151669", "151670", "151671", "151672", "151673", "151674", "151675", "151676", "null"])
+    parser.add_argument('--shuffle', '-s', help='Shuffle coordinates on spatial experiment object',
+        required=True, type=str, choices=["yes", "no"])
     return parser.parse_args()
 
 
