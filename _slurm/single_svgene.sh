@@ -27,6 +27,16 @@ fi
 mount_host=results_single_${dataset_name}/svgenes/${package}
 mount_container=/results/svgenes/${package}
 
+host_datasets=prepared_datasets
+container_dataset=/benchmark/datasets
+
+checking_file="${host_datasets}/SpE_${dataset}_${libd_sample}.h5ad"
+
+if [ ! -f ${checking_file} ]; then
+    echo "${checking_file} file not found."
+    exit 1
+fi
+
 mkdir -p ${mount_host}
 
-singularity exec --writable-tmpfs --bind ${mount_host}:${mount_container} singularity/voyager.sif python3 /benchmark/benchmark_svgenes.py -p ${package} -d ${dataset} -l ${libd_sample}
+singularity exec --writable-tmpfs --bind ${mount_host}:${mount_container} --bind ${host_datasets}:${container_dataset} singularity/voyager.sif python3 /benchmark/benchmark_svgenes.py -p ${package} -d ${dataset} -l ${libd_sample}
