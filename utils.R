@@ -37,11 +37,12 @@ load_SpE <- function(dataset, libd_sample, shuffle){
            id <- q$ah_id[idx][1]
            spe <- suppressMessages(eh[[id]])
        })
-    if( shuffle )
-    {
+    
+    if( shuffle ) {
         rownames(spatialCoords(spe)) <- rownames(spatialCoords(spe))[sample(1:nrow(spatialCoords(spe))) ]
         spatialCoords(spe) <- spatialCoords(spe)[match(colnames(spe), rownames(spatialCoords(spe))),]
     }
+    
     return(spe)
 }
 
