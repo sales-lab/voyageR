@@ -18,3 +18,4 @@ svgenes/gliss/src
 /**/*.sif
 /**/*slurm*.out
 /_slurm/results*
+/**/*.h5ad
