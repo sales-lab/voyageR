@@ -35,9 +35,8 @@ singleCellHaystack_workflow <- function(seurat_object) {
 
 
 args <- commandArgs(trailingOnly = TRUE)
-dataset <- args[1]
-libd_sample <- args[2]
+base_file <- args[1]
 
-spe <- load_SpE(dataset=dataset, libd_sample=libd_sample)
+spe <- load_SpE(base_file)
 se1 <- spe2seurat(spe)
 singleCellHaystack_workflow(se1)
