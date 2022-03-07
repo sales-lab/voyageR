@@ -15,7 +15,7 @@ detach_SpE <- function(spe) {
 }
 
 
-load_SpE <- function(dataset, libd_sample){
+load_SpE <- function(dataset, libd_sample, shuffle){
     switch(dataset,
        spatialLIBD={
            spe <- spatialLIBD::fetch_data(type="spe")
@@ -37,7 +37,11 @@ load_SpE <- function(dataset, libd_sample){
            id <- q$ah_id[idx][1]
            spe <- suppressMessages(eh[[id]])
        })
-
+    if( shuffle )
+    {
+        rownames(spatialCoords(spe)) <- rownames(spatialCoords(spe))[sample(1:nrow(spatialCoords(spe))) ]
+        spatialCoords(spe) <- spatialCoords(spe)[match(colnames(spe), rownames(spatialCoords(spe))),]
+    }
     return(spe)
 }
 
