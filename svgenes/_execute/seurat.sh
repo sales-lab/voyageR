@@ -4,11 +4,10 @@
 # Copyright 2021 Davide Corso
 #
 
-dataset=$1
-libd_sample=$2
+base_file=$1
 
 
 echo "======= Seurat ======="
 # Benchmark Seurat
-/usr/bin/time -v -o ./bench_markvariogram_${dataset}.txt Rscript /benchmark/svgenes/seurat/benchmark_markvariogram.R ${dataset} ${libd_sample} &> ./stdoe_markvariogram_${dataset}.txt
-/usr/bin/time -v -o ./bench_moransi_${dataset}.txt Rscript /benchmark/svgenes/seurat/benchmark_moransi.R ${dataset} ${libd_sample} &> ./stdoe_moransi_${dataset}.txt
+/usr/bin/time -v -o ./bench_markvariogram.txt Rscript /benchmark/svgenes/seurat/benchmark_markvariogram.R ${base_file} &> ./stdoe_markvariogram.txt
+/usr/bin/time -v -o ./bench_moransi.txt Rscript /benchmark/svgenes/seurat/benchmark_moransi.R ${base_file} &> ./stdoe_moransi.txt
