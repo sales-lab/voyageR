@@ -7,9 +7,7 @@ import _pickle as cPickle
 
 def parse_args():
     parser = ArgumentParser(description='Benchmark python packages')
-    parser.add_argument('dataset', help='Choose dataset for TENxVisiumData')
-    parser.add_argument('libd_sample', help='Sample ID of spatialLIBD dataset.', 
-        choices=["151507", "151508", "151509", "151510", "151669", "151670", "151671", "151672", "151673", "151674", "151675", "151676", "null"])
+    parser.add_argument('base_file', help='Base filename of the saved SpE')
     return parser.parse_args()
 
 
@@ -47,8 +45,8 @@ def detach_anndata(ad, symbols=False, transpose_counts=False, coord_on_colnames=
     return counts, coords, sf
 
 
-def load_anndata(dataset, libd_sample):
-    file=f"/benchmark/datasets/SpE_{dataset}_{libd_sample}.h5ad"
+def load_anndata(base_file):
+    file=f"{base_file}.h5ad"
     ad = anndata.read_h5ad(file)
     return ad
 
