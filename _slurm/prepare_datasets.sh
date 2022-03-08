@@ -21,6 +21,7 @@ else
    base_file="${datasets_folder}/spe_${dataset}_${libd_sample}"
 fi
 
-mkdir -p ${datasets_folder}
+mkdir -p ${datasets_folder} /tmp/cache
 
-singularity exec --writable-tmpfs singularity/voyager.sif Rscript -e "source('/benchmark/utils.R'); spe_to_files('${dataset}', '${libd_sample}', '${shuffle}', '${base_file}');"
+export SINGULARITYENV_XDG_CACHE_HOME=/tmp/cache
+singularity exec --writable-tmpfs --no-home singularity/voyager.sif Rscript -e "source('/benchmark/utils.R'); spe_to_files('${dataset}', '${libd_sample}', '${shuffle}', '${base_file}');"
