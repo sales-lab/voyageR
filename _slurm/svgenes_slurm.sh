@@ -50,7 +50,7 @@ if [ ! -f ${checking_file_r} ]; then
     exit 1
 fi
 
-mount_host_results="${mount_host_datasets}/results"
+mount_host_results="${mount_host_datasets}/results/${package}"
 mount_container_results=/results/svgenes/${package}
 
 mkdir -p ${mount_host_results}
