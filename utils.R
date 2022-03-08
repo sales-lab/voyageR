@@ -53,7 +53,7 @@ get_SpE_object <- function(dataset, libd_sample, shuffle){
        })
     
     stopifnot(shuffle %in% c("yes", "no"))
-    if( shuffle ) {
+    if( shuffle == "yes" ) {
         rownames(spatialCoords(spe)) <- rownames(spatialCoords(spe))[sample(1:nrow(spatialCoords(spe))) ]
         spatialCoords(spe) <- spatialCoords(spe)[match(colnames(spe), rownames(spatialCoords(spe))),]
     }

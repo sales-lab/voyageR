@@ -52,9 +52,9 @@ def main():
 
 def parse_args():
     parser = ArgumentParser(description="")
-    parser.add_argument('--package', '-p', help='Package. Required', required=True)
+    parser.add_argument('--package', '-p', help='Package. Required', required=True, type=str)
     parser.add_argument('--dataset', '-d', help='SpatialLIBD or 10xVisium dataset from TENxVisiumData Bioconductor package. Required.', 
-        required=True)
+        required=True, type=str)
     parser.add_argument('--libd_sample', '-l', help='Sample ID of spatialLIBD dataset. null if dataset != spatialLIBD (-l null).', 
         required=True, type=str,
         choices=["151507", "151508", "151509", "151510", "151669", "151670", "151671", "151672", "151673", "151674", "151675", "151676", "null"])
