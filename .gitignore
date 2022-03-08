@@ -13,10 +13,10 @@ svgenes/gliss/src
 /**/*.ipynb
 /**/Rep11_MOB_0.csv
 /**/MOB_sample_info.csv
-/singularity
+/_slurm/singularity
 /**/*.simg
 /**/*.sif
 /**/*slurm*.out
 /_slurm/results*
 /**/*.h5ad
-/datasets_and_results
+/_slurm/datasets_and_results
