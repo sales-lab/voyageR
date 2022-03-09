@@ -42,6 +42,9 @@ def detach_anndata(ad, symbols=False, transpose_counts=False, coord_on_colnames=
     assert ad.obs.scaleFactor.nunique() == 1
     sf = ad.obs.iloc[0, list(ad.obs.columns).index("scaleFactor")]
 
+    for i, j in zip(sorted(counts.index), sorted(coords.index)):
+        assert i == j, f"{i}\n{j}\n========="
+
     return counts, coords, sf
 
 
