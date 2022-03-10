@@ -21,7 +21,12 @@ else
    base_file="${datasets_folder}/spe_${dataset}_${libd_sample}"
 fi
 
-mkdir -p ${datasets_folder} /tmp/cache
+checking_file_python="${base_file}.h5ad"
+checking_file_r="${base_file}.rds"
 
-export SINGULARITYENV_XDG_CACHE_HOME=/tmp/cache
-singularity exec --writable-tmpfs --no-home singularity/voyager.sif Rscript -e "source('/benchmark/utils.R'); spe_to_files('${dataset}', '${libd_sample}', '${shuffle}', '${base_file}');"
+if [[ ! -f ${checking_file_python} && ! -f ${checking_file_r} ]]; then
+   mkdir -p ${datasets_folder} /tmp/cache
+
+   export SINGULARITYENV_XDG_CACHE_HOME=/tmp/cache
+   singularity exec --writable-tmpfs --no-home singularity/voyager.sif Rscript -e "source('/benchmark/utils.R'); spe_to_files('${dataset}', '${libd_sample}', '${shuffle}', '${base_file}');"
+fi
