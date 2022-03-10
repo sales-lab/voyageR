@@ -79,6 +79,7 @@ A benchmark of computational methods for spatial gene expression.
 | JSTA | Python | [paper](https://www.biorxiv.org/content/10.1101/2020.09.18.304147v1.full) | https://github.com/wollmanlab/JSTA |
 | Spark-X | R | [paper](https://genomebiology.biomedcentral.com/articles/10.1186/s13059-021-02404-0) | https://github.com/xzhoulab/SPARK |
 | MERINGUE | R | [paper](https://genome.cshlp.org/content/early/2021/05/25/gr.271288.120.abstract) | https://github.com/JEFworks-Lab/MERINGUE |
+| Squidpy | Python | [papers](https://squidpy.readthedocs.io/en/stable/references.html) | https://squidpy.readthedocs.io/en/stable/index.html |
 
 
 <br /><br />
