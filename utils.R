@@ -30,40 +30,7 @@ write_results <- function(df, pckg_name, analysis, extra_name = ""){
 }
 
 
-filterSpEQC <- function(spe, 
-    feat.stat=c("detected", "mean"), 
-    cell.stat=c("detected", "sum", "total"),
-    quantiles=c(.01, .05, .10, .90, .95),
-    min.quant="1%",
-    max.quant="90%", 
-    filter_mito=TRUE
-    )
-{
-    require(scater)
-    feat.stat <- match.arg(feat.stat)
-    cell.stat <- match.arg(cell.stat)
-    
-    spe <- addPerCellQC(spe)
-    spe <- addPerFeatureQC(spe)
-    qcel <- quantile(colData(spe)[[cell.stat]], quantiles)
-    qfea <- quantile(rowData(spe)[[feat.stat]], quantiles)
-    
-    stopifnot(min.quant %in% names(qfea))
-    stopifnot(max.quant %in% names(qfea))
-    
-    ifea <- which( rowData(spe)[[feat.stat]] > qfea[min.quant] & rowData(spe)[[feat.stat]] < qfea[max.quant] )
-    icel <- which( colData(spe)[[cell.stat]] > qcel[min.quant] & colData(spe)[[cell.stat]] < qcel[max.quant] )
-    spe <- spe[ifea,  icel]
-
-    if (filter_mito) {
-        # Filtering mitochondrial genes
-        mtc <- grepl("^MT-", rowData(spe)$gene_name, ignore.case = T)
-        spe <- spe[-mtc,]
-    }    
-
-    return(spe)
-}
-
+### Scripts for datasets
 
 get_SpE_object <- function(dataset, libd_sample, shuffle, remove_mito=TRUE){
     switch(dataset,
@@ -96,6 +63,41 @@ get_SpE_object <- function(dataset, libd_sample, shuffle, remove_mito=TRUE){
         spatialCoords(spe) <- spatialCoords(spe)[match(colnames(spe), rownames(spatialCoords(spe))),]
     }
     
+    return(spe)
+}
+
+
+filterSpEQC <- function(spe, 
+    feat.stat=c("detected", "mean"), 
+    cell.stat=c("detected", "sum", "total"),
+    quantiles=c(.01, .05, .10, .90, .95),
+    min.quant="1%",
+    max.quant="90%", 
+    filter_mito=TRUE
+    )
+{
+    require(scater)
+    feat.stat <- match.arg(feat.stat)
+    cell.stat <- match.arg(cell.stat)
+    
+    spe <- addPerCellQC(spe)
+    spe <- addPerFeatureQC(spe)
+    qcel <- quantile(colData(spe)[[cell.stat]], quantiles)
+    qfea <- quantile(rowData(spe)[[feat.stat]], quantiles)
+    
+    stopifnot(min.quant %in% names(qfea))
+    stopifnot(max.quant %in% names(qfea))
+    
+    ifea <- which( rowData(spe)[[feat.stat]] > qfea[min.quant] & rowData(spe)[[feat.stat]] < qfea[max.quant] )
+    icel <- which( colData(spe)[[cell.stat]] > qcel[min.quant] & colData(spe)[[cell.stat]] < qcel[max.quant] )
+    spe <- spe[ifea,  icel]
+
+    if (filter_mito) {
+        # Filtering mitochondrial genes
+        mtc <- grepl("^MT-", rowData(spe)$gene_name, ignore.case = T)
+        spe <- spe[!mtc,]
+    }    
+
     return(spe)
 }
 
