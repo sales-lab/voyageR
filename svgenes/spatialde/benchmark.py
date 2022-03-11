@@ -16,7 +16,7 @@ from utils_anndata import parse_args, detach_anndata, load_anndata, write_result
 def spatialde_workflow(counts, coords):
     sample_info = coords
 
-    counts = counts.T[counts.sum(0) >= 3].T  # Filter practically unobserved genes
+    # counts = counts.T[counts.sum(0) >= 3].T  # Filter practically unobserved genes
     counts = counts.loc[sample_info.index]  # Align count matrix with metadata table
 
     norm_expr = NaiveDE.stabilize(counts.T).T
