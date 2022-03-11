@@ -16,37 +16,38 @@ sys.path.insert(1, "/benchmark")
 from utils_anndata import parse_args, detach_anndata, load_anndata, write_results
 
 
-def gliss_preprocess(counts, num_exp_genes=0.01, num_exp_spots=0.01, min_expression=1):
-    num_spots = len(counts.index)
-    num_genes = len(counts.columns)
-    min_genes_spot_exp = round((counts != 0).sum(axis=1).quantile(num_exp_genes))
-    #     print("Number of expressed genes a spot must have to be kept " \
-    #     "({}% of total expressed genes) {}".format(num_exp_genes, min_genes_spot_exp))
-    counts = counts[(counts != 0).sum(axis=1) >= min_genes_spot_exp]
-    #     print("Dropped {} spots".format(num_spots - len(counts.index)))
+# def gliss_preprocess(counts, num_exp_genes=0.01, num_exp_spots=0.01, min_expression=1):
+#     num_spots = len(counts.index)
+#     num_genes = len(counts.columns)
+#     min_genes_spot_exp = round((counts != 0).sum(axis=1).quantile(num_exp_genes))
+#     #     print("Number of expressed genes a spot must have to be kept " \
+#     #     "({}% of total expressed genes) {}".format(num_exp_genes, min_genes_spot_exp))
+#     counts = counts[(counts != 0).sum(axis=1) >= min_genes_spot_exp]
+#     #     print("Dropped {} spots".format(num_spots - len(counts.index)))
           
-    # Spots are columns and genes are rows
-    counts = counts.transpose()
+#     # Spots are columns and genes are rows
+#     counts = counts.transpose()
   
-    # Remove noisy genes
-    min_features_gene = round(len(counts.columns) * num_exp_spots) 
-    #     print("Removing genes that are expressed in less than {} " \
-    #     "spots with a count of at least {}".format(min_features_gene, min_expression))
-    counts = counts[(counts >= min_expression).sum(axis=1) >= min_features_gene]
-    #     print("Dropped {} genes".format(num_genes - len(counts.index)))
+#     # Remove noisy genes
+#     min_features_gene = round(len(counts.columns) * num_exp_spots) 
+#     #     print("Removing genes that are expressed in less than {} " \
+#     #     "spots with a count of at least {}".format(min_features_gene, min_expression))
+#     counts = counts[(counts >= min_expression).sum(axis=1) >= min_features_gene]
+#     #     print("Dropped {} genes".format(num_genes - len(counts.index)))
     
-    data=counts.transpose()
-    temp = [val.split('x') for val in data.index.values]
-    coord = np.array([[float(a[0]), float(a[1])] for a in temp])
+#     data=counts.transpose()
+#     temp = [val.split('x') for val in data.index.values]
+#     coord = np.array([[float(a[0]), float(a[1])] for a in temp])
 
-    return coord, data
+#     return coord, data
 
 
-def gliss_workflow(rawcounts, num_exp_genes=0.01, num_exp_spots=0.01, min_expression=1):
+def gliss_workflow(counts):
     # counts: gene on columns and spot on rows
     # locs: numpy array with x and y coordinates
 
-    locs, counts = gliss_preprocess(rawcounts, num_exp_genes=num_exp_genes, num_exp_spots=num_exp_spots, min_expression=min_expression)
+    temp = [val.split('x') for val in counts.index.values]
+    locs = np.array([[float(a[0]), float(a[1])] for a in temp])
 
     # Partial dataset: 100 genes dataset only for run demo
     # full_data_norm = normalize_count_cellranger(counts)
