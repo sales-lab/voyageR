@@ -15,7 +15,7 @@ spark_workflow <- function(spe) {
     # Partial dataset: 100 genes (partial counts)
     # counts <- counts[1:10, ]
 
-    spark <- SPARK::CreateSPARKObject(counts = counts, location = coords)
+    spark <- SPARK::CreateSPARKObject(counts = counts, location = coords, percentage = 0, min_total_counts = 0)
     spark@lib_size <- apply(spark@counts, 2, sum)
 
     spark <- SPARK::spark.vc(
