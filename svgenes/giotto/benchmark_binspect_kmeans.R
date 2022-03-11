@@ -26,8 +26,8 @@ giotto_workflow_binspect_kmeans <- function(spe) {
     mbrain <- createGiottoObject(raw_exprs = counts, spatial_locs = coords, instructions = instructions )
 
     ## filter genes and cells
-    mbrain <- filterGiotto(gobject = mbrain, expression_threshold = 1, gene_det_in_min_cells = 50,
-                        min_det_genes_per_cell = 1000, expression_values = c('raw'),verbose = T)
+    # mbrain <- filterGiotto(gobject = mbrain, expression_threshold = 1, gene_det_in_min_cells = 50,
+    #                     min_det_genes_per_cell = 1000, expression_values = c('raw'),verbose = T)
 
     ## normalize
     mbrain <- normalizeGiotto(gobject = mbrain, scalefactor = 6000, verbose = T)
