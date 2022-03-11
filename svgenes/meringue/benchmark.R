@@ -12,11 +12,11 @@ meringue_workflow <- function(spe) {
     coords <- tokens$coords
     
     # remove poor datasets and genes with default parameters
-    counts <- cleanCounts(
-        counts=counts,
-        plot=FALSE,
-        verbose=TRUE
-    )
+    # counts <- cleanCounts(
+    #     counts=counts,
+    #     plot=FALSE,
+    #     verbose=TRUE
+    # )
     
     # CPM normalize
     mat <- normalizeCounts(counts = counts, 
