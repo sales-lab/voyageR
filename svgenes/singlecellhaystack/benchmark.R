@@ -16,9 +16,9 @@ set.seed(1)
 
 singleCellHaystack_workflow <- function(seurat_object) {
 	counts <- GetAssayData(seurat_object, slot = "counts")
-	sel.ok <- Matrix::rowSums(counts > 1) > 10
-
-	seurat_object <- seurat_object[sel.ok, ]
+	
+	# sel.ok <- Matrix::rowSums(counts > 1) > 10
+	# seurat_object <- seurat_object[sel.ok, ]
 
 	seurat_object <- NormalizeData(seurat_object)
 
