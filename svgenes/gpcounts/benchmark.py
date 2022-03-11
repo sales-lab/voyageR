@@ -24,7 +24,7 @@ from utils_anndata import parse_args, detach_anndata, load_anndata, write_result
 def gpcounts_workflow(counts):
     # Y is the spatial expression count matrix. Genes on column and coords on rows
     Y = counts
-    Y = Y.T[Y.sum(0) >= 3].T # Filter out genes with less than 3 total counts
+    # Y = Y.T[Y.sum(0) >= 3].T # Filter out genes with less than 3 total counts
 
     spatial_locations = pd.DataFrame(index=Y.index)
     spatial_locations['x'] = Y.index.str.split('x').str.get(0).map(float)
