@@ -23,6 +23,8 @@ rayleighselection_workflow <- function(spe){
     data_tpm <- log2(1+data_tpm)
 
     di <- as.matrix(dist(coords[cells, spatialCoordsNames(spe)]))
+
+    #' Generates a Vietoris-Rips complex from a distance matrix.
     gg <- vr_complex(di, median(di), clique = FALSE)
 
     # Partial dataset
