@@ -57,10 +57,9 @@ def gpcounts_workflow(counts):
     X = X[['x', 'y']]
 
     gene_name = []
-    nb_scaled = True # set the nb_scaled argument to True to pass the scale factors 
     gene_name = Y_run.index
     likelihood = 'Negative_binomial'
-    gp_counts = Fit_GPcounts(X, Y_run.loc[gene_name], scale = scalesdf, nb_scaled = nb_scaled, safe_mode = False)
+    gp_counts = Fit_GPcounts(X, Y_run.loc[gene_name], scale = scalesdf, safe_mode = False)
 
     log_likelihood_ratio = gp_counts.One_sample_test(likelihood)
     results = gp_counts.calculate_FDR(log_likelihood_ratio)
