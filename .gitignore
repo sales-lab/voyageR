@@ -20,3 +20,4 @@ svgenes/gliss/src
 /_slurm/results*
 /**/*.h5ad
 /_slurm/datasets_and_results
+/_slurm/old_*
