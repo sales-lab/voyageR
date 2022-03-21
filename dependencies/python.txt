@@ -1,5 +1,5 @@
+numpy>=1.22.3
 anndata
-cython
 file:///repos/GPcounts
 file:///repos/RobustGP
 gpflow
