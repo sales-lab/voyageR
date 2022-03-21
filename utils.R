@@ -55,7 +55,7 @@ get_SpE_object <- function(dataset, libd_sample, shuffle, remove_mito=TRUE){
            spe <- suppressMessages(eh[[id]])
        })
 
-    spe <- filterSpEQC(spe=spe)
+    spe <- filter_spe(spe=spe)
     
     stopifnot(shuffle %in% c("yes", "no"))
     if( shuffle == "yes" ) {
@@ -69,7 +69,7 @@ get_SpE_object <- function(dataset, libd_sample, shuffle, remove_mito=TRUE){
 # https://github.com/lmweber/nnSVG/blob/2ec35c88abfd30942fae6b3fb6761f78e7a48d9a/R/filter_genes.R#L67
 filter_spe <- function(spe, filter_genes_ncounts = 3, filter_genes_pcspots = 0.5, filter_mito = TRUE) {
     if (!is.null(filter_genes_ncounts) & !is.null(filter_genes_pcspots)) {
-        nspots_perc <- round(filter_genes_pcspots / 100 * ncol(spe))
+        nspots_perc <- ceiling(filter_genes_pcspots / 100 * ncol(spe))
         non_detected_genes <- rowSums(counts(spe) >= filter_genes_ncounts) < nspots_perc
         
         spe <- spe[!non_detected_genes, ]
