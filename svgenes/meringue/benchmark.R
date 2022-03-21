@@ -4,6 +4,7 @@
 #
 
 library(MERINGUE)
+library(Matrix)
 source("/benchmark/utils.R")
 
 meringue_workflow <- function(spe) {
@@ -11,6 +12,8 @@ meringue_workflow <- function(spe) {
     counts <- tokens$counts
     coords <- tokens$coords
     
+    counts <- Matrix::Matrix(counts, sparse = TRUE)
+
     # remove poor datasets and genes with default parameters
     # counts <- cleanCounts(
     #     counts=counts,
@@ -19,7 +22,7 @@ meringue_workflow <- function(spe) {
     # )
     
     # CPM normalize
-    mat <- normalizeCounts(counts = counts, 
+    mat <- MERINGUE::normalizeCounts(counts = counts, 
         log=TRUE,
         verbose=TRUE
     )
