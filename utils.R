@@ -66,39 +66,22 @@ get_SpE_object <- function(dataset, libd_sample, shuffle, remove_mito=TRUE){
     return(spe)
 }
 
-
-filterSpEQC <- function(spe, 
-    feat.stat=c("detected", "mean"), 
-    cell.stat=c("detected", "sum", "total"),
-    quantiles=c(.01, .05, .10, .90, .95),
-    min.quant="1%",
-    max.quant="90%", 
-    filter_mito=TRUE
-    )
-{
-    require(scater)
-    feat.stat <- match.arg(feat.stat)
-    cell.stat <- match.arg(cell.stat)
+# https://github.com/lmweber/nnSVG/blob/2ec35c88abfd30942fae6b3fb6761f78e7a48d9a/R/filter_genes.R#L67
+filter_spe <- function(spe, filter_genes_ncounts = 3, filter_genes_pcspots = 0.5, filter_mito = TRUE) {
+    if (!is.null(filter_genes_ncounts) & !is.null(filter_genes_pcspots)) {
+        nspots_perc <- round(filter_genes_pcspots / 100 * ncol(spe))
+        non_detected_genes <- rowSums(counts(spe) >= filter_genes_ncounts) < nspots_perc
+        
+        spe <- spe[!non_detected_genes, ]
+    }
     
-    spe <- addPerCellQC(spe)
-    spe <- addPerFeatureQC(spe)
-    qcel <- quantile(colData(spe)[[cell.stat]], quantiles)
-    qfea <- quantile(rowData(spe)[[feat.stat]], quantiles)
-    
-    stopifnot(min.quant %in% names(qfea))
-    stopifnot(max.quant %in% names(qfea))
-    
-    ifea <- which( rowData(spe)[[feat.stat]] > qfea[min.quant] & rowData(spe)[[feat.stat]] < qfea[max.quant] )
-    icel <- which( colData(spe)[[cell.stat]] > qcel[min.quant] & colData(spe)[[cell.stat]] < qcel[max.quant] )
-    spe <- spe[ifea,  icel]
-
-    if (filter_mito) {
+    if(filter_mito) {
         # Filtering mitochondrial genes
         mtc <- grepl("^MT-", rowData(spe)$gene_name, ignore.case = T)
         spe <- spe[!mtc,]
-    }    
-
-    return(spe)
+    }
+  
+  return(spe)
 }
 
 
