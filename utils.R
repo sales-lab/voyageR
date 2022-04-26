@@ -32,7 +32,7 @@ write_results <- function(df, pckg_name, analysis, extra_name = ""){
 
 ### Scripts for datasets
 
-get_SpE_object <- function(dataset, libd_sample, shuffle, remove_mito=TRUE){
+get_SpE_object <- function(dataset, libd_sample, shuffle, filter_genes_ncounts, filter_genes_pcspots){
     switch(dataset,
        spatialLIBD={
            spe <- spatialLIBD::fetch_data(type="spe")
@@ -55,7 +55,7 @@ get_SpE_object <- function(dataset, libd_sample, shuffle, remove_mito=TRUE){
            spe <- suppressMessages(eh[[id]])
        })
 
-    spe <- filter_spe(spe=spe)
+    spe <- filter_spe(spe=spe, filter_genes_ncounts=filter_genes_ncounts, filter_genes_pcspots=filter_genes_pcspots)
     
     stopifnot(shuffle %in% c("yes", "no"))
     if( shuffle == "yes" ) {
@@ -67,7 +67,8 @@ get_SpE_object <- function(dataset, libd_sample, shuffle, remove_mito=TRUE){
 }
 
 # https://github.com/lmweber/nnSVG/blob/2ec35c88abfd30942fae6b3fb6761f78e7a48d9a/R/filter_genes.R#L67
-filter_spe <- function(spe, filter_genes_ncounts = 3, filter_genes_pcspots = 0.5, filter_mito = TRUE) {
+# Default: filter_genes_ncounts = 3, filter_genes_pcspots = 0.5
+filter_spe <- function(spe, filter_genes_ncounts, filter_genes_pcspots, filter_mito = TRUE) {
     if (!is.null(filter_genes_ncounts) & !is.null(filter_genes_pcspots)) {
         nspots_perc <- ceiling(filter_genes_pcspots / 100 * ncol(spe))
         non_detected_genes <- rowSums(counts(spe) >= filter_genes_ncounts) < nspots_perc
@@ -85,8 +86,8 @@ filter_spe <- function(spe, filter_genes_ncounts = 3, filter_genes_pcspots = 0.5
 }
 
 
-spe_to_files <- function(dataset, libd_sample, shuffle, filename){
-    spe <- get_SpE_object(dataset, libd_sample, shuffle)
+spe_to_files <- function(dataset, libd_sample, shuffle, filename, filter_genes_ncounts, filter_genes_pcspots){
+    spe <- get_SpE_object(dataset, libd_sample, shuffle, as.numeric(filter_genes_ncounts), as.numeric(filter_genes_pcspots))
     
     saveRDS(spe, file = paste0(filename, ".rds"))
 
