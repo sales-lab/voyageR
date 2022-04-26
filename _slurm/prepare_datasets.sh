@@ -16,10 +16,10 @@ base_folder="datasets_and_results"
 
 if [ $shuffle == "yes" ]
 then
-   datasets_folder="${base_folder}/shuffled/${dataset}_${libd_sample}"
-   base_file="${datasets_folder}/spe_${dataset}_${libd_sample}_shuffled_${filter_genes_ncounts}_${filter_genes_pcspots}"
+   datasets_folder="${base_folder}/shuffled_${filter_genes_ncounts}_${filter_genes_pcspots}/${dataset}_${libd_sample}"
+   base_file="${datasets_folder}/spe_${dataset}_${libd_sample}_shuffled"
 else
-   datasets_folder="${base_folder}/normal/${dataset}_${libd_sample}"
+   datasets_folder="${base_folder}/normal_${filter_genes_ncounts}_${filter_genes_pcspots}/${dataset}_${libd_sample}"
    base_file="${datasets_folder}/spe_${dataset}_${libd_sample}"
 fi
 

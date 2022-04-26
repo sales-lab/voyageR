@@ -15,8 +15,6 @@ def main():
     dataset = args.dataset
     libd_sample = str(args.libd_sample)
     shuffle = args.shuffle
-    filter_genes_ncounts = str(args.filter_genes_ncounts)
-    filter_genes_pcspots = str(args.filter_genes_pcspots)
 
     output_folder = f"/results/svgenes/{package}"
     dir=f"/benchmark/svgenes/{package}"
@@ -29,7 +27,7 @@ def main():
         libd_sample = "null"
 
     if shuffle == "yes":
-        base_file = f"/benchmark/datasets/spe_{dataset}_{libd_sample}_shuffled_{filter_genes_ncounts}_{filter_genes_pcspots}"
+        base_file = f"/benchmark/datasets/spe_{dataset}_{libd_sample}_shuffled"
     else:
         base_file = f"/benchmark/datasets/spe_{dataset}_{libd_sample}"
     
@@ -63,10 +61,6 @@ def parse_args():
         choices=["151507", "151508", "151509", "151510", "151669", "151670", "151671", "151672", "151673", "151674", "151675", "151676", "null"])
     parser.add_argument('--shuffle', '-s', help='Shuffle coordinates on spatial experiment object',
         required=True, type=str, choices=["yes", "no"])
-    parser.add_argument('--filter_genes_ncounts', '-f1', help='Filtering retains genes containing at least this expression counts',
-        required=True, type=str)
-    parser.add_argument('--filter_genes_pcspots', '-f2', help='Percent of the total number of spatial locations (spots)',
-        required=True, type=str)
     return parser.parse_args()
 
 
