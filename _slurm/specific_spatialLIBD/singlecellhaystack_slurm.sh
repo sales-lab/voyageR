@@ -3,10 +3,10 @@
 
 #SBATCH --job-name="singlecellhaystack_svg"
 #SBATCH --mail-type=ALL
-#SBATCH --time=1:00:00
+#SBATCH --time=3:00:00
 #SBATCH --cpus-per-task=1
-#SBATCH --mem=3G
-#SBATCH --array=1-24
+#SBATCH --mem=10G
+#SBATCH --array=1-12
 
 
 #
@@ -16,7 +16,9 @@
 package="singlecellhaystack"
 dataset="spatialLIBD"
 
-smpl="$(tail -n +$SLURM_ARRAY_TASK_ID spatialLIBD_samples_filters.txt | head -n1)"
+samples_file=$1
+smpl="$(tail -n +$SLURM_ARRAY_TASK_ID ${samples_file} | head -n1)"
+
 
 IFS=_ read libd_sample shuffle filter_genes_ncounts filter_genes_pcspots <<< $smpl
 echo "=== package: ${package} === dataset: ${dataset} === libd_sample: ${libd_sample} === shuffle: ${shuffle} === filter_genes_ncounts: ${filter_genes_ncounts} === filter_genes_pcspots: ${filter_genes_pcspots} ==="

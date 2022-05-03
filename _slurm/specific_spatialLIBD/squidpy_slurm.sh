@@ -5,8 +5,8 @@
 #SBATCH --mail-type=ALL
 #SBATCH --time=24:00:00
 #SBATCH --cpus-per-task=4
-#SBATCH --mem=5G
-#SBATCH --array=1-24
+#SBATCH --mem=10G
+#SBATCH --array=1-12
 
 
 #
@@ -16,7 +16,8 @@
 package="squidpy"
 dataset="spatialLIBD"
 
-smpl="$(tail -n +$SLURM_ARRAY_TASK_ID spatialLIBD_samples_filters.txt | head -n1)"
+samples_file=$1
+smpl="$(tail -n +$SLURM_ARRAY_TASK_ID ${samples_file} | head -n1)"
 
 IFS=_ read libd_sample shuffle filter_genes_ncounts filter_genes_pcspots <<< $smpl
 echo "=== package: ${package} === dataset: ${dataset} === libd_sample: ${libd_sample} === shuffle: ${shuffle} === filter_genes_ncounts: ${filter_genes_ncounts} === filter_genes_pcspots: ${filter_genes_pcspots} ==="
