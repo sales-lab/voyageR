@@ -28,7 +28,7 @@ meringue_workflow <- function(spe) {
     )
 
     # Get neighbor-relationships
-    w <- getSpatialNeighbors(coords, filterDist = 25)
+    w <- getSpatialNeighbors(coords, filterDist = 150)
     
     # Identify sigificantly spatially auto-correlated genes
     
