@@ -5,7 +5,6 @@ gpcounts
 jsta
 meringue
 nnsvg
-rayleighselection
 scgco
 seurat
 singlecellhaystack
@@ -14,3 +13,4 @@ spark
 spatialde
 squidpy
 stutility
+rayleighselection
