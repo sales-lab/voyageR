@@ -21,3 +21,4 @@ svgenes/gliss/src
 /**/*.h5ad
 /_slurm/datasets_and_results
 /_slurm/old_*
+/.ipynb_checkpoints
