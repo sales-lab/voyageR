@@ -13,7 +13,9 @@ TENxVisiumData
 jbergenstrahle/STUtility
 lfa
 limma
+nnSVG
 qvalue
+scran
 singleCellHaystack
 spatialLIBD
 xzhoulab/SPARK

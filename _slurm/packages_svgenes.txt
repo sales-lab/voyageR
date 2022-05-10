@@ -4,6 +4,7 @@ gliss
 gpcounts
 jsta
 meringue
+nnsvg
 rayleighselection
 scgco
 seurat
