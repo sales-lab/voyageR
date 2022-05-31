@@ -44,7 +44,7 @@ meringue_workflow <- function(spe) {
         I = I,
         w = w,
         adjustPv = TRUE,
-        alpha = 0.05,
+        alpha = 1,
         minPercentCells = 0.10,
         verbose = TRUE,
         details = TRUE
