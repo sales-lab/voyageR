@@ -22,3 +22,4 @@ svgenes/gliss/src
 /_slurm/datasets_and_results
 /_slurm/old_*
 /.ipynb_checkpoints
+/_slurm/specific_spatialLIBD/gpcounts_gpu
