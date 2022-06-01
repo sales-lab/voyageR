@@ -5,7 +5,7 @@
 #SBATCH --mail-type=ALL
 #SBATCH --time=10:00:00
 #SBATCH --cpus-per-task=4
-#SBATCH --mem=15G
+#SBATCH --mem=10G
 #SBATCH --array=1-12
 
 
@@ -54,4 +54,4 @@ mount_container_results=/results/svgenes/${package}
 
 mkdir -p ${mount_host_results}
 
-singularity exec --writable-tmpfs --bind ${mount_host_results}:${mount_container_results} --bind ${mount_host_datasets}:${mount_container_dataset} ../singularity/voyager.sif python3 /benchmark/benchmark_svgenes.py -p ${package} -d ${dataset} -l ${libd_sample} -s ${shuffle}
+singularity exec --writable-tmpfs --bind ${mount_host_results}:${mount_container_results} --bind ${mount_host_datasets}:${mount_container_dataset} ../singularity/voyager_nnsvg.sif python3 /benchmark/benchmark_svgenes.py -p ${package} -d ${dataset} -l ${libd_sample} -s ${shuffle}

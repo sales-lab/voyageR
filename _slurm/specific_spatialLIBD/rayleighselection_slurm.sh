@@ -2,7 +2,7 @@
 
 
 #SBATCH --job-name="rayleighselection_svg"
-#SBATCH --exclude=xen5,xen6
+#SBATCH --exclude=xen5,xen6,xen7
 #SBATCH --mail-type=ALL
 #SBATCH --time=96:00:00
 #SBATCH --cpus-per-task=4

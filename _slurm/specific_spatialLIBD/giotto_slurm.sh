@@ -4,7 +4,7 @@
 #SBATCH --job-name="giotto_svg"
 #SBATCH --mail-type=ALL
 #SBATCH --time=3:00:00
-#SBATCH --cpus-per-task=1
+#SBATCH --cpus-per-task=4
 #SBATCH --mem=10G
 #SBATCH --array=1-12
 
