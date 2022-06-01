@@ -24,7 +24,8 @@ moransi_workflow <- function(seurat_object) {
         seurat_object, 
         assay = "SCT", 
         features = VariableFeatures(seurat_object),
-        selection.method = "moransi"
+        selection.method = "moransi",
+        nfeatures = dim(seurat_object)[1],
     )
 
     result <- seurat_object[["SCT"]]@meta.features
