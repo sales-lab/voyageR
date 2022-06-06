@@ -5,6 +5,7 @@ libd_sample=$2
 shuffle=$3
 filter_genes_ncounts=$4
 filter_genes_pcspots=$5
+rep=$6
 
 if [[ $shuffle != "yes" && $shuffle != "no" ]]
 then
@@ -16,10 +17,10 @@ base_folder="datasets_and_results"
 
 if [ $shuffle == "yes" ]
 then
-   datasets_folder="${base_folder}/shuffled_${filter_genes_ncounts}_${filter_genes_pcspots}/${dataset}_${libd_sample}"
+   datasets_folder="${base_folder}/shuffled_${filter_genes_ncounts}_${filter_genes_pcspots}_${rep}/${dataset}_${libd_sample}"
    base_file="${datasets_folder}/spe_${dataset}_${libd_sample}_shuffled"
 else
-   datasets_folder="${base_folder}/normal_${filter_genes_ncounts}_${filter_genes_pcspots}/${dataset}_${libd_sample}"
+   datasets_folder="${base_folder}/normal_${filter_genes_ncounts}_${filter_genes_pcspots}_${rep}/${dataset}_${libd_sample}"
    base_file="${datasets_folder}/spe_${dataset}_${libd_sample}"
 fi
 
