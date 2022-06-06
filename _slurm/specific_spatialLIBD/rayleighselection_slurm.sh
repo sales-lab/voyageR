@@ -21,7 +21,7 @@ samples_file=$1
 smpl="$(tail -n +$SLURM_ARRAY_TASK_ID ${samples_file} | head -n1)"
 
 
-IFS=_ read libd_sample shuffle filter_genes_ncounts filter_genes_pcspots <<< $smpl
+IFS=_ read libd_sample shuffle filter_genes_ncounts filter_genes_pcspots rep <<< $smpl
 echo "=== package: ${package} === dataset: ${dataset} === libd_sample: ${libd_sample} === shuffle: ${shuffle} === filter_genes_ncounts: ${filter_genes_ncounts} === filter_genes_pcspots: ${filter_genes_pcspots} ==="
 
 
@@ -29,10 +29,10 @@ base_folder="../datasets_and_results"
 
 if [ $shuffle == "yes" ]
 then
-   mount_host_datasets="${base_folder}/shuffled_${filter_genes_ncounts}_${filter_genes_pcspots}/${dataset}_${libd_sample}"
+   mount_host_datasets="${base_folder}/shuffled_${filter_genes_ncounts}_${filter_genes_pcspots}_${rep}/${dataset}_${libd_sample}"
    base_file="${mount_host_datasets}/spe_${dataset}_${libd_sample}_shuffled"
 else
-   mount_host_datasets="${base_folder}/normal_${filter_genes_ncounts}_${filter_genes_pcspots}/${dataset}_${libd_sample}"
+   mount_host_datasets="${base_folder}/normal_${filter_genes_ncounts}_${filter_genes_pcspots}_${rep}/${dataset}_${libd_sample}"
    base_file="${mount_host_datasets}/spe_${dataset}_${libd_sample}"
 fi
 
