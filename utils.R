@@ -1,4 +1,4 @@
-suppressMessages(library(TENxVisiumData))
+# suppressMessages(library(TENxVisiumData))
 suppressMessages(library(SpatialExperiment))
 suppressMessages(library(SummarizedExperiment))
 suppressMessages(library(spatialLIBD))
