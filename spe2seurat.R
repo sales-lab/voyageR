@@ -3,7 +3,9 @@ library(SpatialExperiment)
 
 
 spe2seurat <- function(spe){
-    coords <- cbind.data.frame(spatialData(spe), spatialCoords(spe))
+    cd <- colData(spe)[,c("in_tissue", "array_row", "array_col")]
+
+    coords <- cbind.data.frame(cd, spatialCoords(spe))
     colnames(coords) <- c("tissue", "row", "col", "imagerow", "imagecol")
 
     imgR <- imgRaster(spe)
