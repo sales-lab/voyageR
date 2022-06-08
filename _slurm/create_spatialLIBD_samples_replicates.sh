@@ -1,6 +1,7 @@
 #!/bin/bash
 
-ls specific_spatialLIBD/replicates/spatialLIBD_samples_*.txt \
+# ls specific_spatialLIBD/replicates/spatialLIBD_samples_*.txt \
+ls specific_spatialLIBD/spatialLIBD_samples_*.txt \
     | while read file; 
 do	
     cat ${file} | while read line || [[ -n $line ]];

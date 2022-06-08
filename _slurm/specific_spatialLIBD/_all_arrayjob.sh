@@ -11,6 +11,8 @@ while read pckg; do
     if [[ "${pckg}" == 'boostgp' || "${pckg}" == 'gpcounts' || "${pckg}" == 'jsta' || "${pckg}" == 'stutility' || "${pckg}" == 'rayleighselection' ]]; then
         continue
     fi
-    echo "${pckg}_slurm.sh"
-    sbatch -o ${log_path}/slurm-${pckg}-%A_%a.out ${pckg}_slurm.sh "${samples_file}.txt"
+    
+    slurm_id=$(sbatch -o ${log_path}/slurm-${pckg}-%A_%a.out ${pckg}_slurm.sh "${samples_file}.txt")
+    echo "${slurm_id}  -  ${pckg}"
+    
 done <../packages_svgenes.txt
