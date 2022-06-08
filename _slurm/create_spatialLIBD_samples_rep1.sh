@@ -2,7 +2,7 @@
 
 
 # SPECIFIC SAMPLE
-while read dts; do
+while read dts || [[ -n $dts ]]; do
     IFS=_ read libd_sample shuffle filter_genes_ncounts filter_genes_pcspots rep <<< ${dts}
     echo "spatialLIBD ${libd_sample} ${shuffle} ${filter_genes_ncounts} ${filter_genes_pcspots} ${rep}"
     ./prepare_datasets.sh spatialLIBD ${libd_sample} ${shuffle} ${filter_genes_ncounts} ${filter_genes_pcspots} ${rep}; 
