@@ -1,7 +1,7 @@
 #!/bin/bash
 
-
-for fullsample in $(ls replicates/spatialLIBD_samples_*.txt)
+# for fullsample in $(ls replicates/spatialLIBD_samples_*.txt)
+for fullsample in $(ls replicates/spatialLIBD_samples_shuffle_filters_2_01_rep*.txt)
 do	
     basefile=$(basename ${fullsample})
     IFS=. read samples_file ext <<< ${basefile}

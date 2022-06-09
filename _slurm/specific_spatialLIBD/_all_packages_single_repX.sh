@@ -1,7 +1,8 @@
 #!/bin/bash
 
 
-fullsample="replicates/spatialLIBD_samples_shuffle_filters_2_01_rep2.txt"
+input_rep=$1
+fullsample="replicates/spatialLIBD_samples_shuffle_filters_2_03_${input_rep}.txt"
 
 basefile=$(basename ${fullsample})
 IFS=. read samples_file ext <<< ${basefile}
