@@ -24,3 +24,4 @@ svgenes/gliss/src
 /.ipynb_checkpoints
 /_slurm/specific_spatialLIBD/gpcounts_gpu
 trace_slurm_*.txt
+gpcounts_gpu.zip
