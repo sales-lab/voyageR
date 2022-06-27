@@ -1,25 +1,23 @@
 #!/bin/bash
 
 
-#SBATCH --job-name="spark_svg"
+#SBATCH --job-name="seurat_svg"
 #SBATCH --mail-type=ALL
-#SBATCH --time=52:00:00
-#SBATCH --cpus-per-task=4
-#SBATCH --mem=40G
-#SBATCH --array=1-12
-
-
+#SBATCH --time=10:00:00
+#SBATCH --cpus-per-task=1
+#SBATCH --mem=10G
 #
 # Copyright 2022 Davide Corso
 #
 
-package="spark"
-dataset="spatialLIBD"
+package=$1
+dataset=$2
+libd_sample=$3
+shuffle=$4
+filter_genes_ncounts=$5
+filter_genes_pcspots=$6
+rep=$7
 
-samples_file=$1
-smpl="$(tail -n +$SLURM_ARRAY_TASK_ID ${samples_file} | head -n1)"
-
-IFS=_ read libd_sample shuffle filter_genes_ncounts filter_genes_pcspots rep <<< $smpl
 echo "=== package: ${package} === dataset: ${dataset} === libd_sample: ${libd_sample} === shuffle: ${shuffle} === filter_genes_ncounts: ${filter_genes_ncounts} === filter_genes_pcspots: ${filter_genes_pcspots} ==="
 
 
@@ -27,25 +25,25 @@ base_folder="../datasets_and_results"
 
 if [ $shuffle == "yes" ]
 then
-   mount_host_datasets="${base_folder}/shuffled_${filter_genes_ncounts}_${filter_genes_pcspots}_${rep}/${dataset}_${libd_sample}"
-   base_file="${mount_host_datasets}/spe_${dataset}_${libd_sample}_shuffled"
+mount_host_datasets="${base_folder}/shuffled_${filter_genes_ncounts}_${filter_genes_pcspots}_${rep}/${dataset}_${libd_sample}"
+base_file="${mount_host_datasets}/spe_${dataset}_${libd_sample}_shuffled"
 else
-   mount_host_datasets="${base_folder}/normal_${filter_genes_ncounts}_${filter_genes_pcspots}_${rep}/${dataset}_${libd_sample}"
-   base_file="${mount_host_datasets}/spe_${dataset}_${libd_sample}"
+mount_host_datasets="${base_folder}/normal_${filter_genes_ncounts}_${filter_genes_pcspots}_${rep}/${dataset}_${libd_sample}"
+base_file="${mount_host_datasets}/spe_${dataset}_${libd_sample}"
 fi
 
 mount_container_dataset=/benchmark/datasets
 
 checking_file_python="${base_file}.h5ad"
 if [ ! -f ${checking_file_python} ]; then
-    echo "${checking_file_python} python file not found."
-    exit 1
+   echo "${checking_file_python} python file not found."
+   exit 1
 fi
 
 checking_file_r="${base_file}.rds"
 if [ ! -f ${checking_file_r} ]; then
-    echo "${checking_file_r} R file not found."
-    exit 1
+   echo "${checking_file_r} R file not found."
+   exit 1
 fi
 
 mount_host_results="${mount_host_datasets}/results/${package}"
