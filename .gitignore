@@ -17,7 +17,7 @@ svgenes/gliss/src
 /**/*.simg
 /**/*.sif
 /**/*slurm*.out
-/_slurm/results*
+/_slurm/*results*
 /**/*.h5ad
 /_slurm/datasets_and_results
 /_slurm/old_*
