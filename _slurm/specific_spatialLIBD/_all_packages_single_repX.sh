@@ -2,7 +2,7 @@
 
 
 input_rep=$1
-fullsample="replicates/spatialLIBD_samples_shuffle_filters_3_01_${input_rep}.txt"
+fullsample="replicates/spatialLIBD_samples_shuffle_filters_4_03_${input_rep}.txt"
 
 basefile=$(basename ${fullsample})
 IFS=. read samples_file ext <<< ${basefile}
